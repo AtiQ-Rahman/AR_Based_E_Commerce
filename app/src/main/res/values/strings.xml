@@ -1,0 +1,176 @@
+<resources>
+    <string name="facebook_app_id">216005369501436</string>
+    <string name="fb_login_protocol_scheme">fb216005369501436</string>
+    <string name="app_name">AR Based E-Commerce</string>
+    <string name="connection_problem">Internet Connection Failed</string>
+    <string name="connection_check">Please Check Your Connection</string>
+    <string name="ok">Okay</string>
+    <string name="phone_number">Mobile Number</string>
+    <string name="name">Your Name</string>
+    <string name="signup1">Sign Up?</string>
+    <string name="signin2">Sign In</string>
+    <string name="signup2">Sign Up</string>
+    <string name="signin1">Sign In?</string>
+    <string name="verification_code">Please write down the OTP</string>
+    <string name="resnd_code">Again send the OTP</string>
+    <string name="submit">Submit</string>
+    <string name="phone_error_title">Youn Phone Number Is Not Correct</string>
+    <string name="phone_error_body">Please Enter The Correct Number</string>
+    <string name="pin_error_tile">OTP is wrong</string>
+    <string name="pin_error_body">Please Enter the correct OTP</string>
+    <string name="account_error_tile">Invalid User</string>
+    <string name="account_error_body">Please Sign Up </string>
+    <string name="Admin">Admin ?</string>
+    <string name="Customer">Customer ?</string>
+    <string name="Admin2">Admin</string>
+    <string name="Customer2">Customer</string>
+
+    <string name="user_type">User Type ?</string>
+    <string name="input_error">Input Error</string>
+    <string name="name_error">Enter Your Name</string>
+    <string name="type_error">Select User Type</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="total_item">Total Item</string>
+    <string name="total_sold_item">Total Sold Item</string>
+    <string name="total_item2">Total Shopping Item</string>
+    <string name="total_buy">Total Buy</string>
+    <string name="total_unsold_item">Total Unsold Item</string>
+    <string name="total_sell">Total Sell</string>
+    <string name="name2">Name</string>
+    <string name="location">Location</string>
+    <string name="userID">User ID</string>
+    <string name="email">Email</string>
+    <string name="address">Address</string>
+    <string name="cancel">Cancel</string>
+    <string name="name_change">Please Change Your Name</string>
+    <string name="phone_number_change">Please Change Your Number</string>
+    <string name="email_change">Please Change Your Email</string>
+    <string name="address_change"> Please Change Your Address </string>
+    <string name="price">Price</string>
+    <string name="empty">Empty</string>
+    <string name="admin">Admin User</string>
+    <string name="highest_bid">Highest Price</string>
+    <string name="total_bid">Total Bid</string>
+    <string name="profile">Profile</string>
+    <string name="taka">Taka</string>
+    <string name="ti">pieces</string>
+    <string name="all_products">All Product List</string>
+    <string name="sold_items">Sold Items</string>
+    <string name="unsold_item">Unsold Items</string>
+    <string name="add_new_item">Add New Item</string>
+    <string name="image_upload">Upload Image</string>
+    <string name="video_upload">Video Upload</string>
+    <string name="item_name">Item Name</string>
+    <string name="item_price">Product Price</string>
+    <string name="Size"> Size </string>
+    <string name="color">Color</string>
+    <string name="weight"></string>
+    <string name="weight2">ওজন</string>
+    <string name="height">উচ্চতা (ফুট)</string>
+    <string name="teeth">দাঁত সংখ্যা</string>
+    <string name="born">জাত</string>
+    <string name="item_type">Item TYpe</string>
+    <string name="red">Red</string>
+    <string name="white">White</string>
+    <string name="black">Black</string>
+    <string name="brown">Brown</string>
+    <string name="gray">Grey</string>
+    <string name="mixed">Colourful</string>
+
+    <string name="product_name">Product Name</string>
+    <string name="product_price">Product Price</string>
+    <string name="product_type">Product Type</string>
+
+
+    <string name="change_profile_pic">Do you want to change your picture?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="select">Select</string>
+    <string name="write">Write Down</string>
+
+    <string name="minimum_image">Choose 2/4 images </string>
+    <string name="change">Change the Picture</string>
+    <string name="crop">Crop your image</string>
+    <string name="first">At First</string>
+    <string name="video_size">Video Size must be less than 50MB</string>
+    <string name="are_you_sure_to_exit"> Are you sure to EXIT?</string>
+    <string name="compare">Compare</string>
+    <string name="pricing">Pricing</string>
+    <string name="pricing_history">Pricing History</string>
+    <string name="pricing2">দাম হাঁকান</string>
+    <string name="details">Details...</string>
+    <string name="unsold">Unsold...</string>
+    <string name="sold">Sold</string>
+    <string name="all"> All</string>
+    <string name="thousand">thousand</string>
+    <string name="lakh">লাখ</string>
+    <string name="jon">জন</string>
+    <string name="picture">Picture</string>
+    <string name="id">Item ID</string>
+    <string name="sell">বিক্রয় করুন</string>
+    <string name="confirm_message">বিক্রেতা উপরোক্ত দামে বিক্রি করতে রাজি আছে। আপনি কিনতে চাইলে কনফার্ম করুন।</string>
+    <string name="confirm">Confirm</string>
+    <string name="new_price_request">নতুন একজন ক্রেতা আপনার পশুটি দাম করেছেন।</string>
+    <string name="no_price">এখনো দাম হয়নি।</string>
+    <string name="read_more">read more...</string>
+    <string name="sell_request">বিক্রেতা আপনার কাছে পশুটি বিক্রি করতে রাজি হয়েছেন।</string>
+    <string name="view_price">View Prices</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="delete_permission">Do you want to delete?</string>
+    <string name="payment_completed">Payment Completed</string>
+    <string name="confirm2">Confirmed</string>
+    <string name="time_remain"> Time Remaining </string>
+    <string name="charge">Charge </string>
+    <string name="Customer_name">Customer Name</string>
+    <string name="Admin_name">Admin</string>
+    <string name="sold_price">Sold Price</string>
+    <string name="referral_code_length"> Length must be 5 digits</string>
+    <string name="admin2">Admin</string>
+    <string name="enter_your_admin_panel_password">অ্যাডমিন প্যানেলের পাসওয়ার্ড দিন</string>
+    <string name="verify_admin">Verify Admin</string>
+    <string name="sender_id">Sender ID</string>
+    <string name="time">Time</string>
+    <string name="medium">Medium</string>
+    <string name="money_amount">Total Amount</string>
+    <string name="transaction_history">Transaction History</string>
+    <string name="contact">Contact</string>
+    <string name="disable_confirmation">Disable Confirm?</string>
+    <string name="enable_confirmation">Enable Confirm?</string>
+    <string name="notification">Notification</string>
+    <string name="search_hint_for_product">Write the Product Name or ID</string>
+    <string name="payment">Payment</string>
+    <string name="about">About</string>
+    <string name="buy_item_list">ক্রয়কৃত পশুর লিস্ট</string>
+    <string name="write_date">Date</string>
+    <string name="product_price_write">Write Down The Price</string>
+    <string name="write_message">Message</string>
+    <string name="slogan">Our Slogan</string>
+    <string name="mission">Our Mission</string>
+    <string name="off">Off</string>
+    <string name="on">On</string>
+    <string name="logout">Are you Sure to logout?</string>
+    <string-array name="tx_methods">
+        <item>
+            bKash
+        </item>
+        <item>
+            Rocket
+        </item>
+        <item>
+            Nagad
+        </item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_add__new__product">Add_New_Product</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+</resources>
