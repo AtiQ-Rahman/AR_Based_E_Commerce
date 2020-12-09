@@ -91,16 +91,15 @@ public class SignIn extends AppCompatActivity {
 
     public void sign_in(View view){
         phone_number=phone_number_et.getText().toString();
-        if(!isValidPhoneNumber(phone_number)){
+        if(!isValidPhoneNumber(phone_number)) {
 
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+//            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
             show_error_dialog();
 
             return;
         }
-
         else {
 
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);

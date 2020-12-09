@@ -34,7 +34,7 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         user_type=getIntent().getStringExtra("user_type");
-        Log.d("SignUp",user_type);
+
         user_types.add(R.string.user_type);
         user_types.add(R.string.Admin);
         user_types.add(R.string.Admin);

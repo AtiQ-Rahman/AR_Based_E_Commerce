@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "1030712295162",
-    "firebase_url": "https://virtualtrialroom-1aced.firebaseio.com",
-    "project_id": "virtualtrialroom-1aced",
-    "storage_bucket": "virtualtrialroom-1aced.appspot.com"
+    "project_number": "1048491425341",
+    "project_id": "ar-based-e-commerce",
+    "storage_bucket": "ar-based-e-commerce.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1030712295162:android:2645aa5d1efffbf9ccd343",
+        "mobilesdk_app_id": "1:1048491425341:android:cc43abc4c2737fab4d7454",
         "android_client_info": {
-          "package_name": "com.example.virtualtrialroom"
+          "package_name": "com.augmented_reality.AR_Based_E_Commerce"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1030712295162-sf1hbkuame5j0l37rer5bugkgs20cbvl.apps.googleusercontent.com",
+          "client_id": "1048491425341-kk0f9mjj1576vtrac2p73knutpq72ic0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCvsNtgaJQD0bP-jzGyJup41xhZIBPi_to"
+          "current_key": "AIzaSyBZbKtpD-P0_XGW9pOEGFBdEkkEtR21sIY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1030712295162-sf1hbkuame5j0l37rer5bugkgs20cbvl.apps.googleusercontent.com",
+              "client_id": "1048491425341-kk0f9mjj1576vtrac2p73knutpq72ic0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
