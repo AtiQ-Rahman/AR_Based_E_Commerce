@@ -15,32 +15,34 @@
         android:roundIcon="@drawable/logo_android"
         android:supportsRtl="true"
         android:theme="@style/Theme.AR_Based_E_Commerce">
-        <activity android:name="com.augmented_reality.AR_Based_E_Commerce.CustomPhotoGalleryActivity"></activity>
+        <activity android:name=".Admin.EditProductInfo"></activity>
+        <activity android:name=".Admin.Product_Details_Admin" />
+        <activity android:name=".CustomPhotoGalleryActivity" />
         <activity
-            android:name="com.augmented_reality.AR_Based_E_Commerce.Admin.Add_New_Product"
+            android:name=".Admin.Add_New_Product"
             android:label="@string/title_activity_add__new__product"
             android:theme="@style/Theme.AR_Based_E_Commerce.NoActionBar" />
-        <activity android:name="com.augmented_reality.AR_Based_E_Commerce.Customer.Compare" />
-        <activity android:name="com.augmented_reality.AR_Based_E_Commerce.Customer.Product_Details" />
-        <activity android:name="com.augmented_reality.AR_Based_E_Commerce.Messenger" />
-        <activity android:name="com.augmented_reality.AR_Based_E_Commerce.DisabledActivity" />
-        <activity android:name="com.augmented_reality.AR_Based_E_Commerce.AllNotifications" />
-        <activity android:name="com.augmented_reality.AR_Based_E_Commerce.PinViewLayout" />
-        <activity android:name="com.augmented_reality.AR_Based_E_Commerce.SignUp" />
-        <activity android:name="com.augmented_reality.AR_Based_E_Commerce.Customer.CustomerDashboard" />
-        <activity android:name="com.augmented_reality.AR_Based_E_Commerce.Admin.AdminDashboard" />
-        <activity android:name="com.augmented_reality.AR_Based_E_Commerce.SignIn" />
+        <activity android:name=".Customer.Compare" />
+        <activity android:name=".Customer.Product_Details_Customer" />
+        <activity android:name=".Messenger" />
+        <activity android:name=".DisabledActivity" />
+        <activity android:name=".AllNotifications" />
+        <activity android:name=".PinViewLayout" />
+        <activity android:name=".SignUp" />
+        <activity android:name=".Customer.CustomerDashboard" />
+        <activity android:name=".Admin.AdminDashboard" />
+        <activity android:name=".SignIn" />
 
         <service
-            android:name="com.augmented_reality.AR_Based_E_Commerce.SignIn"
+            android:name=".SignIn"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name="com.augmented_reality.AR_Based_E_Commerce.SelectUserType" />
-        <activity android:name="com.augmented_reality.AR_Based_E_Commerce.MainActivity">
+        <activity android:name=".SelectUserType" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

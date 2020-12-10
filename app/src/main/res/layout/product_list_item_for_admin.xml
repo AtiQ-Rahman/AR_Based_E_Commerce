@@ -79,7 +79,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="170dp"
+                    android:layout_height="130dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:orientation="vertical">
@@ -113,9 +113,8 @@
                         android:textColor="@color/item_info_text_color"
                         android:textSize="@dimen/sp_16"
                         android:typeface="serif"/>
-
                     <TextView
-                        android:id="@+id/total_bid1"
+                        android:id="@+id/type1_admin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
@@ -124,39 +123,27 @@
                         android:gravity="left"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:singleLine="true"
-                        android:text="Color : Red"
+                        android:text="Type : Ladies "
                         android:textColor="@color/item_info_text_color"
                         android:textSize="@dimen/sp_16"
                         android:typeface="serif"/>
 
+
                     <Button
-                        android:id="@+id/show_bid_history1"
+                        android:id="@+id/Product_Details1"
                         android:layout_width="match_parent"
                         android:layout_height="36dp"
                         android:tint="@null"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="3dp"
                         android:background="@drawable/round_back_transparent"
-                        android:text="Buy Now"
+                        android:text="Details"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_12"
                         android:textStyle="bold">
 
                     </Button>
 
-                    <Button
-                        android:id="@+id/show_bid_history2"
-                        android:layout_width="match_parent"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="3dp"
-                        android:theme="@style/mybtn"
-                        android:background="@drawable/round_back_transparent"
-                        android:text="Trial Now"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_12"
-                        android:textStyle="bold">
-                    </Button>
 
                 </LinearLayout>
             </LinearLayout>
@@ -211,6 +198,7 @@
                         android:layout_alignParentRight="true">
 
                         <TextView
+                            android:id="@+id/id2"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_margin="3dp"
@@ -224,13 +212,13 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="170dp"
+                    android:layout_height="130dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:orientation="vertical">
 
                     <TextView
-
+                        android:id="@+id/name2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
@@ -245,7 +233,7 @@
                         android:typeface="serif"/>
 
                     <TextView
-
+                        android:id="@+id/price2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
@@ -260,7 +248,7 @@
                         android:typeface="serif"/>
 
                     <TextView
-
+                        android:id="@+id/type2_admin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
@@ -269,36 +257,24 @@
                         android:gravity="left"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:singleLine="true"
-                        android:text="Color : Red"
+                        android:text="Type : Ladies "
                         android:textColor="@color/item_info_text_color"
                         android:textSize="@dimen/sp_16"
                         android:typeface="serif"/>
 
-                    <Button
 
+                    <Button
+                        android:id="@+id/Product_Details2"
                         android:layout_width="match_parent"
                         android:layout_height="36dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="3dp"
                         android:background="@drawable/round_back_transparent"
-                        android:text="Buy Now"
+                        android:text="Details"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_12"
                         android:textStyle="bold">
 
-                    </Button>
-
-                    <Button
-
-                        android:layout_width="match_parent"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="3dp"
-                        android:background="@drawable/round_back_transparent"
-                        android:text="Trial Now"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_12"
-                        android:textStyle="bold">
                     </Button>
 
                 </LinearLayout>

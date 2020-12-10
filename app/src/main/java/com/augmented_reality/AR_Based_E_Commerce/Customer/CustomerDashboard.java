@@ -267,8 +267,8 @@ public class CustomerDashboard extends AppCompatActivity implements NavigationVi
         dashboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                search_btn.setVisibility(View.GONE);
+                search_btn.setVisibility(View.VISIBLE);
+                //search_btn.setVisibility(View.GONE);
                 title_tv.setText("Dashboard");
                 active_indicator(0);
                 changeFragmentView(new Splash_Fragment());
@@ -298,7 +298,8 @@ public class CustomerDashboard extends AppCompatActivity implements NavigationVi
             @Override
             public void onClick(View view) {
 
-                search_btn.setVisibility(View.GONE);
+                search_btn.setVisibility(View.VISIBLE);
+                //search_btn.setVisibility(View.GONE);
                 title_tv.setText("All Products");
                 active_indicator(2);
                 changeFragmentView(new AllProducts());

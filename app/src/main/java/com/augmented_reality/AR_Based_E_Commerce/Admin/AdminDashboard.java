@@ -259,7 +259,8 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
             @Override
             public void onClick(View view) {
 
-                search_btn.setVisibility(View.GONE);
+                search_btn.setVisibility(View.VISIBLE);
+                //search_btn.setVisibility(View.GONE);
                 title_tv.setText("Dashboard");
                 active_indicator(0);
                 changeFragmentView(new Splash_Fragment());
@@ -274,7 +275,6 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
             @Override
             public void onClick(View view) {
 
-                search_btn.setVisibility(View.GONE);
                 title_tv.setText(R.string.profile);
                 active_indicator(1);
                 changeFragmentView(new AdminProfile());
@@ -289,7 +289,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
             @Override
             public void onClick(View view) {
 
-                search_btn.setVisibility(View.GONE);
+                search_btn.setVisibility(View.VISIBLE);
                 title_tv.setText("All Products");
                 active_indicator(2);
                 changeFragmentView(new AllProductsForAdmin());

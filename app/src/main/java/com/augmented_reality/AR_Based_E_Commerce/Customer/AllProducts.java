@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Map;
 
 
@@ -53,8 +53,10 @@ public class AllProducts extends Fragment {
 
     AlertDialog alertDialog;
     String admin_device_id = "", mail, phone_number = "", admin_id = "";
-    ArrayList<Product> products = new ArrayList<Product>();
-    ArrayList<Product> products_temp = new ArrayList<Product>();
+    //ArrayList<Product> products = new ArrayList<Product>();
+    ArrayList<ArrayList<Product>> products=new ArrayList<ArrayList<Product>>();
+    //ArrayList<Product> products_temp = new ArrayList<Product>();
+    ArrayList<Product> products_temp=new ArrayList<Product>();
     ArrayList<String> product_types = new ArrayList<>();
     ArrayList<String> price_range = new ArrayList<>();
     ArrayList<String> colors = new ArrayList<>();
@@ -84,7 +86,6 @@ public class AllProducts extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_all_products, container, false);
-
         firebaseAuth = FirebaseAuth.getInstance();
         user_id = firebaseAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
@@ -239,37 +240,50 @@ public class AllProducts extends Fragment {
         return view;
     }
 
-    public void filter() {
+    public void filter(){
         products.clear();
-        if (drawer.isDrawerOpen(GravityCompat.END)) {
+        ArrayList<Product> productList=new ArrayList<>();
+        if(drawer.isDrawerOpen(GravityCompat.END)){
             drawer.closeDrawer(GravityCompat.END);
         }
-        for (int i = 0; i < products_temp.size(); i++) {
-            Product product = products_temp.get(i);
 
+
+        for(int i=0;i<products_temp.size();i++){
+            Product product=products_temp.get(i);
             //type filter
-            if (product_type.length() == 0 || product_type.equalsIgnoreCase(product.product_type)) {
-                products.add(product);
-            } else if (!product_type.equalsIgnoreCase(product.product_type)) {
-                products.remove(product);
-            }
+            System.out.println(product.product_type);
             //price filter
-            if (((product.price >= price_start && product.price <= price_end)) && !products.contains(product)) {
-                // products.add(product);
-
-            } else if ((product.price < price_start || product.price > price_end)) {
-                products.remove(product);
+            if(((product.price>=price_start&&product.price<=price_end))&&!productList.contains(product)){
+                productList.add(product);
             }
-
+            else if((product.price<price_start||product.price>price_end)){
+                productList.remove(product);
+            }
             //color filter
-            if(color.equalsIgnoreCase(product.color)&&!products.contains(product))
+            if(color.equalsIgnoreCase(product.color)&&!productList.contains(product))
             {
-                // products.add(product);
+                productList.add(product);
             }
             else if(color.length()>0&&!color.equalsIgnoreCase(product.color)){
-                products.remove(product);
+                productList.remove(product);
             }
-
+            if(product_type.length()==0||product_type.equalsIgnoreCase(product.product_type)){
+                productList.add(product);
+            }
+            else if(!product_type.equalsIgnoreCase(product.product_type)){
+                productList.remove(product);
+            }
+        }
+        ArrayList<Product> products2=new ArrayList<>();
+        for(Product product:productList){
+            products2.add(product);
+            if(products2.size()==2){
+                products.add(products2);
+                products2=new ArrayList<>();
+            }
+        }
+        if(products2.size()>0){
+            products.add(products2);
         }
         recycleAdapter.notifyDataSetChanged();
     }
@@ -278,17 +292,24 @@ public class AllProducts extends Fragment {
 
         products.clear();
         search_string=search_string.toLowerCase().trim();
+        ArrayList<Product> products2=new ArrayList<>();
         for(int i=0;i<products_temp.size();i++){
+
             Product product=products_temp.get(i);
+
             String product_id="A-"+product.product_alt_id;
             product_id=product_id.toLowerCase();
             String product_name=product.name.toLowerCase();
             if(product_id.startsWith(search_string)||product_name.startsWith(search_string)){
-                products.add(product);
+                products2.add(product);
+                if(products2.size()==2){
+                    products.add(products2);
+                    products2=new ArrayList<>();
+                }
             }
         }
-        filter();
-        //recycleAdapter.notifyDataSetChanged();
+        if(products2.size()>0) products.add(products2);
+        recycleAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -327,7 +348,7 @@ public class AllProducts extends Fragment {
 
                 int position=getLayoutPosition();
                 Product product=products.get(position);
-                Intent tnt=new Intent(getContext(),Product_Details.class);
+                Intent tnt=new Intent(getContext(), Product_Details_Customer.class);
                 tnt.putExtra("product_id",product.product_id);
                 startActivity(tnt);
 
@@ -412,7 +433,7 @@ public class AllProducts extends Fragment {
             return view;
         }
     }
-    
+
     public void get_all_products_data(){
         progressDialog.show();
         Query documentReference=db.collection("AllProducts");
@@ -421,59 +442,64 @@ public class AllProducts extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
                 products.clear();
-                products_temp.clear();
-                sold_products.clear();
                 if(task.isComplete()){
-
                     QuerySnapshot querySnapshot=task.getResult();
+                   // Log.d("Atiq",user_id+"");
                     if(querySnapshot!=null&&querySnapshot.size()>0){
-
+                        ArrayList<Product> products2=new ArrayList<>();
                         for(QueryDocumentSnapshot queryDocumentSnapshot:querySnapshot){
                             Map<String,Object> map=queryDocumentSnapshot.getData();
                             String product_id=map.get("product_id").toString();
                             String user_id=map.get("user_id").toString();
                             String name=map.get("name").toString();
-                            String product_type=map.get("type").toString();
                             int price=Integer.parseInt(map.get("price").toString());
+
                             String color=map.get("color").toString();
-                            String compress_image_path="";
+
+                            String image_path="";
                             if(map.containsKey("compress_image_path")){
-                                compress_image_path=map.get("compress_image_path").toString();
+                                image_path=map.get("compress_image_path").toString();
                             }
-                            String[] image_paths=map.get("original_image_path").toString().split(",");
-                            String image_path=image_paths[0];
+                            if(image_path.equalsIgnoreCase("")){
+                                String[] image_paths=map.get("original_image_path").toString().split(",");
+                                if(image_paths.length>=1) image_path=image_paths[0];
+                                else image_path="";
+                            }
                             String video_path="";
                             if(map.containsKey("video_path")){
                                 video_path=map.get("video_path").toString();
                             }
 
                             String product_alt_id=map.get("alternative_id").toString();
-                            String sold_status=map.get("sold_status").toString();
-                            Product product=new Product(product_id,product_type,product_alt_id,user_id,name,price,color,image_path,video_path);
                             int sold_price=0;
-                            if(!sold_status.equalsIgnoreCase("unsold")&&map.containsKey("sold_price")){
+                            String sold_status=map.get("sold_status").toString();
+                            if(map.containsKey("sold_price")){
                                 sold_price=Integer.parseInt(map.get("sold_price").toString());
+                            }
+                            String product_type=map.get("type").toString();
+                            Product product=new Product(product_id,product_type,product_alt_id,user_id,sold_status,sold_price,name,price,color,image_path,video_path);
+                            products_temp.add(product);
+                            products2.add(product);
+                            if(products2.size()==2){
+                                products.add(products2);
+                                products2=new ArrayList<>();
+                            }
 
-                                Product product2=new Product(product_id,product_type,product_alt_id,user_id,sold_status,sold_price,name,price,color,compress_image_path,video_path);
-                                sold_products.add(product2);
-                            }
-                            else{
-                                products.add(product);
-                                get_user_data(product.user_id,product);
-                            }
+
                         }
-                        products_temp.addAll(products);
-                        Collections.sort(products);
-                        Collections.sort(products_temp);
-                        horizontal_recycleAdapter.notifyDataSetChanged();
+                        if(products2.size()>0){
+                            products.add(products2);
+                        }
+
                         recycleAdapter.notifyDataSetChanged();
                         recyclerView.setVisibility(View.VISIBLE);
                         empty.setVisibility(View.INVISIBLE);
-                        //born_sp.setAdapter(new CustomAdapter(getContext(),0,borns));
+
                     }
                     else{
                         recyclerView.setVisibility(View.GONE);
                         empty.setVisibility(View.VISIBLE);
+                        recycleAdapter.notifyDataSetChanged();
                     }
 
                 }
@@ -481,6 +507,7 @@ public class AllProducts extends Fragment {
 
                     recyclerView.setVisibility(View.INVISIBLE);
                     empty.setVisibility(View.VISIBLE);
+                    recycleAdapter.notifyDataSetChanged();
 
                 }
                 progressDialog.dismiss();
@@ -493,37 +520,54 @@ public class AllProducts extends Fragment {
 //------------Halum
     public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewAdapter>{
 
-        ArrayList<Product> products;
-        public RecycleAdapter(ArrayList<Product> products){
-            this.products=products;
-        }
+    ArrayList<ArrayList<Product>> products;
+    public RecycleAdapter(ArrayList<ArrayList<Product>> products){
+
+        this.products=products;
+    }
         public  class ViewAdapter extends RecyclerView.ViewHolder implements View.OnClickListener {
 
             View mView;
-            Button compare,details,pricing;
-            CardView card1;
-            ImageView product_image1;
-            TextView id_tv,name_tv1,price_tv1,highest_bid_tv1,weight_tv1;
+            Button buyNow1,buyNow2,trial1,trail2;
+            CardView card1,card2;
+            ImageView product_image1,product_image2;
+            TextView id_tv1,id_tv2,name_tv1,name_tv2,price_tv1,price_tv2,color_tv1,color_tv2,type_tv1,type_tv2;
             public ViewAdapter(View itemView) {
                 super(itemView);
                 mView=itemView;
                 mView.setOnClickListener(this);
                 product_image1=mView.findViewById(R.id.product_image1);
-                id_tv=mView.findViewById(R.id.id);
+                product_image2=mView.findViewById(R.id.product_image2);
+                id_tv1=mView.findViewById(R.id.id);
+                id_tv2=mView.findViewById(R.id.id2);
                 name_tv1=mView.findViewById(R.id.name1);
+                name_tv2=mView.findViewById(R.id.name2);
                 price_tv1=mView.findViewById(R.id.price1);
+                price_tv2=mView.findViewById(R.id.price2);
 
+                type_tv1=mView.findViewById(R.id.type1);
+                type_tv2=mView.findViewById(R.id.type2);
+
+
+                buyNow1 =  mView.findViewById(R.id.buy_now1);
+                color_tv1 = mView.findViewById(R.id.color1);
+                color_tv2 = mView.findViewById(R.id.color2);
+                buyNow2 = mView.findViewById(R.id.buy_now2);
+                trial1 = mView.findViewById(R.id.trial_1);
+                trail2 = mView.findViewById(R.id.trial_2);
                 card1=mView.findViewById(R.id.card1);
+                card2=mView.findViewById(R.id.card2);
+                Log.d("Atiq",products.size()+"");
+                //Toast.makeText(getContext(),products.size()+"",Toast.LENGTH_LONG).show();
             }
 
 
             @Override
             public void onClick(View v) {
 
-                Product product=products.get(getLayoutPosition());
-                Intent tnt=new Intent(getContext(),Product_Details.class);
-                tnt.putExtra("product_id",product.product_id);
-                startActivity(tnt);
+//                Intent tnt=new Intent(getContext(), Product_Details_Customer.class);
+//                tnt.putExtra("product_id",product.product_id);
+//                startActivity(tnt);
             }
         }
         @NonNull
@@ -536,17 +580,104 @@ public class AllProducts extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull ViewAdapter holder, final int position) {
 
-            Product product=products.get(position);
-            holder.card1.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fade_scale));
-            holder.product_image1.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fade_transition_animation));
-            holder.name_tv1.setText(getString(R.string.name2) +" : "+product.name);
-            holder.price_tv1.setText(getString(R.string.price)+" : "+EngToBanConverter.getInstance().convert(product.price+"") +" "+getString(R.string.taka));
-            holder.id_tv.setText("A-"+product.product_alt_id);
-            if(product.image_path!=null&&product.image_path.length()>5){
-                Picasso.get().load(product.image_path).into(holder.product_image1);
+            ArrayList<Product> products2=products.get(position);
+            if(products2.size()==2){
+
+                holder.card1.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fade_scale));
+                holder.card2.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fade_scale));
+                holder.product_image1.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fade_transition_animation));
+                holder.product_image2.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fade_transition_animation));
+                Product product=products2.get(0);
+                holder.id_tv1.setText("A-"+product.product_alt_id);
+                holder.name_tv1.setText(getString(R.string.name2) +" : "+product.name);
+                holder.color_tv1.setText("Color"+" : "+product.color);
+                holder.price_tv1.setText(getString(R.string.price)+" : "+product.price+" "+getString(R.string.taka));
+                holder.type_tv1.setText("Type"+" : "+product.product_type);
+
+
+                if(product.image_path!=null&&product.image_path.length()>5){
+                    Picasso.get().load(product.image_path).into(holder.product_image1);
+                }
+                holder.name_tv1.setSelected(true);
+                holder.price_tv1.setSelected(true);
+                holder.color_tv1.setSelected(true);
+                holder.type_tv1.setSelected(true);
+
+
+                holder.card2.setVisibility(View.VISIBLE);
+
+                product=products2.get(1);
+                holder.id_tv2.setText("A-"+product.product_alt_id);
+                holder.name_tv2.setText(getString(R.string.name2) +" : "+product.name);
+                holder.price_tv2.setText(getString(R.string.price)+" : "+product.price+" "+getString(R.string.taka));
+                holder.color_tv2.setText("Color"+" : "+product.color);
+                holder.type_tv2.setText("Type"+" : "+product.product_type);
+                if(product.image_path!=null&&product.image_path.length()>5){
+                    Picasso.get().load(product.image_path).into(holder.product_image2);
+                }
+                holder.name_tv2.setSelected(true);
+                holder.price_tv2.setSelected(true);
+                holder.color_tv2.setSelected(true);
+                holder.type_tv2.setSelected(true);
+
             }
-            holder.name_tv1.setSelected(true);
-            holder.price_tv1.setSelected(true);
+            else if(products2.size()==1){
+                holder.card1.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fade_scale));
+                holder.product_image1.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fade_transition_animation));
+                Product product=products2.get(0);
+                holder.id_tv1.setText("A-"+product.product_alt_id);
+                holder.name_tv1.setText(getString(R.string.name2) +" : "+product.name);
+                holder.price_tv1.setText(getString(R.string.price)+" : "+product.price+" "+getString(R.string.taka));
+                holder.color_tv1.setText("Color"+" : "+product.color);
+                holder.type_tv1.setText("Type"+" : "+product.product_type);
+
+                if(product.image_path!=null&&product.image_path.length()>5){
+                    Picasso.get().load(product.image_path).into(holder.product_image1);
+                }
+
+                holder.name_tv1.setSelected(true);
+                holder.price_tv1.setSelected(true);
+                holder.color_tv1.setSelected(true);
+                holder.type_tv1.setSelected(true);
+
+                holder.card2.setVisibility(View.INVISIBLE);
+            }
+
+            holder.card1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent tnt=new Intent(getContext(), Product_Details_Customer.class);
+                    tnt.putExtra("product_id",products2.get(0).product_id);
+                    startActivity(tnt);
+                }
+            });
+            holder.card2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent tnt=new Intent(getContext(), Product_Details_Customer.class);
+                    tnt.putExtra("product_id",products2.get(1).product_id);
+                    startActivity(tnt);
+                }
+            });
+
+            holder.buyNow1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent tnt=new Intent(getContext(), Product_Details_Customer.class);
+                    tnt.putExtra("product_id",products2.get(0).product_id);
+                    startActivity(tnt);
+                }
+            });
+
+            holder.buyNow2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent tnt=new Intent(getContext(), Product_Details_Customer.class);
+                    tnt.putExtra("product_id",products2.get(1).product_id);
+                    startActivity(tnt);
+                }
+            });
+
 //            holder.compare.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -557,7 +688,7 @@ public class AllProducts extends Fragment {
 //                @Override
 //                public void onClick(View v) {
 //
-//                    Intent tnt=new Intent(getContext(),Product_Details.class);
+//                    Intent tnt=new Intent(getContext(),Product_Details_Customer.class);
 //                    tnt.putExtra("product_id",product.product_id);
 //                    startActivity(tnt);
 //                }
@@ -578,27 +709,27 @@ public class AllProducts extends Fragment {
     }
 
 
-    public void show_compare_product_list(String product_id){
-        AlertDialog.Builder alert=new AlertDialog.Builder(getContext());
-        View view= LayoutInflater.from(getContext()).inflate(R.layout.compare_dialogbox_layout,null);
-        alert.setView(view);
-        progressDialog.dismiss();
-        alertDialog=alert.show();;
-        RecyclerView recyclerView=view.findViewById(R.id.recycle);
-        RecycleAdapter_For_Compare recycleAdapter_for_compare=new RecycleAdapter_For_Compare(products,product_id);
-        recyclerView.setAdapter(recycleAdapter_for_compare);
-        Button cancel=view.findViewById(R.id.cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                alertDialog.dismiss();
-            }
-        });
-
-
-
-    }
+//    public void show_compare_product_list(String product_id){
+//        AlertDialog.Builder alert=new AlertDialog.Builder(getContext());
+//        View view= LayoutInflater.from(getContext()).inflate(R.layout.compare_dialogbox_layout,null);
+//        alert.setView(view);
+//        progressDialog.dismiss();
+//        alertDialog=alert.show();;
+//        RecyclerView recyclerView=view.findViewById(R.id.recycle);
+//        RecycleAdapter_For_Compare recycleAdapter_for_compare=new RecycleAdapter_For_Compare(products,product_id);
+//        recyclerView.setAdapter(recycleAdapter_for_compare);
+//        Button cancel=view.findViewById(R.id.cancel);
+//        cancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                alertDialog.dismiss();
+//            }
+//        });
+//
+//
+//
+//    }
 
     public class RecycleAdapter_For_Compare extends RecyclerView.Adapter<RecycleAdapter_For_Compare.ViewAdapter>{
 

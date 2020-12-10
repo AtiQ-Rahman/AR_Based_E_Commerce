@@ -19,8 +19,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.augmented_reality.AR_Based_E_Commerce.Customer.Product_Details;
-import com.augmented_reality.AR_Based_E_Commerce.EngToBanConverter;
 import com.augmented_reality.AR_Based_E_Commerce.Product;
 import com.augmented_reality.AR_Based_E_Commerce.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -99,7 +97,9 @@ public class AllProductsForAdmin extends Fragment {
 
         products.clear();
         search_string=search_string.toLowerCase().trim();
+
         ArrayList<Product> products2=new ArrayList<>();
+
         for(int i=0;i<products_temp.size();i++){
             Product product=products_temp.get(i);
             String product_id="A-"+product.product_alt_id;
@@ -170,7 +170,8 @@ public class AllProductsForAdmin extends Fragment {
                             }
                             if(image_path.equalsIgnoreCase("")){
                                 String[] image_paths=map.get("original_image_path").toString().split(",");
-                                image_path=image_paths[0];
+                               if(image_paths.length>=1) image_path=image_paths[0];
+                               else image_path="";
                             }
                             String video_path="";
                             if(map.containsKey("video_path")){
@@ -232,10 +233,10 @@ public class AllProductsForAdmin extends Fragment {
         public  class ViewAdapter extends RecyclerView.ViewHolder implements View.OnClickListener {
 
             View mView;
-            Button profile;
+            Button Bdetails1,Bdetails2;
             CardView card1,card2;
             ImageView product_image1,product_image2;
-            TextView id_tv1,id_tv2,name_tv1,name_tv2,price_tv1,price_tv2,sold_price_tv1,sold_price_tv2;
+            TextView id_tv1,id_tv2,name_tv1,name_tv2,price_tv1,price_tv2,color_tv1,color_tv2,type_tv1,type_tv2;
             public ViewAdapter(View itemView) {
                 super(itemView);
                 mView=itemView;
@@ -249,9 +250,12 @@ public class AllProductsForAdmin extends Fragment {
                 price_tv1=mView.findViewById(R.id.price1);
                 price_tv2=mView.findViewById(R.id.price2);
 
-                sold_price_tv1=mView.findViewById(R.id.price1);
-                sold_price_tv2=mView.findViewById(R.id.price2);
 
+                type_tv1=mView.findViewById(R.id.type1_admin);
+                type_tv2=mView.findViewById(R.id.type2_admin);
+
+                Bdetails1 = mView.findViewById(R.id.Product_Details1);
+                Bdetails2 = mView.findViewById(R.id.Product_Details2);
                 card1=mView.findViewById(R.id.card1);
                 card2=mView.findViewById(R.id.card2);
             }
@@ -284,37 +288,28 @@ public class AllProductsForAdmin extends Fragment {
                 holder.id_tv1.setText("A-"+product.product_alt_id);
                 holder.name_tv1.setText(getString(R.string.name2) +" : "+product.name);
                 holder.price_tv1.setText(getString(R.string.price)+" : "+product.price+" "+getString(R.string.taka));
+                holder.type_tv1.setText("Type"+" : "+product.product_type);
 
                 if(product.image_path!=null&&product.image_path.length()>5){
                     Picasso.get().load(product.image_path).into(holder.product_image1);
                 }
-                if(!product.sold_status.equalsIgnoreCase("unsold")){
-                    holder.sold_price_tv1.setVisibility(View.VISIBLE);
-                    holder.sold_price_tv1.setText(getString(R.string.sold)+"\n"+ EngToBanConverter.getInstance().convert(product.sold_price+"")+" "+getString(R.string.taka));
-                }
-                else{
-                    holder.sold_price_tv1.setVisibility(View.GONE);
-                }
-
                 holder.name_tv1.setSelected(true);
                 holder.price_tv1.setSelected(true);
+                holder.type_tv1.setSelected(true);
+
+
                 holder.card2.setVisibility(View.VISIBLE);
                 product=products2.get(1);
                 holder.id_tv2.setText("A-"+product.product_alt_id);
                 holder.name_tv2.setText(getString(R.string.name2) +" : "+product.name);
                 holder.price_tv2.setText(getString(R.string.price)+" : "+product.price+" "+getString(R.string.taka));
+                holder.type_tv2.setText("Type"+" : "+product.product_type);
                 if(product.image_path!=null&&product.image_path.length()>5){
                     Picasso.get().load(product.image_path).into(holder.product_image2);
                 }
-                if(!product.sold_status.equalsIgnoreCase("unsold")){
-                    holder.sold_price_tv2.setVisibility(View.VISIBLE);
-                    holder.sold_price_tv2.setText(getString(R.string.sold)+"\n"+EngToBanConverter.getInstance().convert(product.sold_price+"")+" "+getString(R.string.taka));
-                }
-                else{
-                    holder.sold_price_tv2.setVisibility(View.GONE);
-                }
                 holder.name_tv2.setSelected(true);
                 holder.price_tv2.setSelected(true);
+                holder.type_tv2.setSelected(true);
 
             }
             else if(products2.size()==1){
@@ -324,20 +319,15 @@ public class AllProductsForAdmin extends Fragment {
                 holder.id_tv1.setText("A-"+product.product_alt_id);
                 holder.name_tv1.setText(getString(R.string.name2) +" : "+product.name);
                 holder.price_tv1.setText(getString(R.string.price)+" : "+product.price+" "+getString(R.string.taka));
+                holder.type_tv1.setText("Type"+" : "+product.product_type);
 
                 if(product.image_path!=null&&product.image_path.length()>5){
                     Picasso.get().load(product.image_path).into(holder.product_image1);
                 }
-                if(!product.sold_status.equalsIgnoreCase("unsold")){
-                    holder.sold_price_tv1.setVisibility(View.VISIBLE);
-                    holder.sold_price_tv1.setText( getString(R.string.sold)+"\n"+EngToBanConverter.getInstance().convert(product.sold_price+"")+" "+getString(R.string.taka));
-                }
-                else{
-                    holder.sold_price_tv1.setVisibility(View.GONE);
-                }
 
                 holder.name_tv1.setSelected(true);
                 holder.price_tv1.setSelected(true);
+                holder.type_tv1.setSelected(true);
 
                 holder.card2.setVisibility(View.INVISIBLE);
             }
@@ -345,7 +335,7 @@ public class AllProductsForAdmin extends Fragment {
             holder.card1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent tnt=new Intent(getContext(), Product_Details.class);
+                    Intent tnt=new Intent(getContext(), Product_Details_Admin.class);
                     tnt.putExtra("product_id",products2.get(0).product_id);
                     startActivity(tnt);
                 }
@@ -353,12 +343,29 @@ public class AllProductsForAdmin extends Fragment {
             holder.card2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent tnt=new Intent(getContext(),Product_Details.class);
+                    Intent tnt=new Intent(getContext(), Product_Details_Admin.class);
                     tnt.putExtra("product_id",products2.get(1).product_id);
                     startActivity(tnt);
                 }
             });
 
+            holder.Bdetails1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent tnt=new Intent(getContext(), Product_Details_Admin.class);
+                    tnt.putExtra("product_id",products2.get(0).product_id);
+                    startActivity(tnt);
+                }
+            });
+
+            holder.Bdetails2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent tnt=new Intent(getContext(), Product_Details_Admin.class);
+                    tnt.putExtra("product_id",products2.get(1).product_id);
+                    startActivity(tnt);
+                }
+            });
 
         }
 

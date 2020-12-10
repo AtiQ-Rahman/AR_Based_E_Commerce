@@ -36,7 +36,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
-public class Product_Details extends AppCompatActivity {
+public class Product_Details_Customer extends AppCompatActivity {
     ArrayList<String> imagesPathList=new ArrayList<>();
    // ArrayList<PriceHistoryItem> priceHistoryItems=new ArrayList<>();
     RecycleAdapter recycleAdapter;
@@ -47,7 +47,7 @@ public class Product_Details extends AppCompatActivity {
     ProgressDialog progressDialog;
     Product product;
     ImageView imageView;
-    TextView tv_price,tv_name,tv_color,id_tv;
+    TextView tv_price,tv_name,tv_color,id_tv,tv_type;
     EditText price_et;
     User user;
     int price=0,previous_price=0;
@@ -70,10 +70,8 @@ public class Product_Details extends AppCompatActivity {
         imageView=findViewById(R.id.image_view);
         tv_name=findViewById(R.id.name);
         tv_price=findViewById(R.id.price);
-
         tv_color=findViewById(R.id.color);
-
-
+        tv_type = findViewById(R.id.type);
         id_tv=findViewById(R.id.id);
 
         recycleAdapter=new RecycleAdapter(imagesPathList);
@@ -122,18 +120,15 @@ public class Product_Details extends AppCompatActivity {
                     String video_path=map.get("video_path").toString();
 
                     String product_alt_id=map.get("alternative_id").toString();
-                    String location=map.get("location").toString();
-                    String product_type=map.get("type").toString();
+                    String product_type=product_type=map.get("type").toString();
                     product=new Product(product_id,product_type,product_alt_id,user_id,name,price,color,image_path,video_path);
                     imagesPathList.addAll(Arrays.asList(image_paths));
                     recycleAdapter.notifyDataSetChanged();
                     tv_name.setText(name);
                     id_tv.setText("A-"+product_alt_id);
                     tv_price.setText(price+" "+getString(R.string.taka));
-
-
+                    tv_type.setText(product_type);
                     tv_color.setText(color);
-
                     get_user_data(user_id);
                 }
                 progressDialog.dismiss();
@@ -188,7 +183,7 @@ public class Product_Details extends AppCompatActivity {
                 super(itemView);
                 mView=itemView;
                 mView.setOnClickListener(this);
-                product_image=mView.findViewById(R.id.product_image1);
+                product_image=mView.findViewById(R.id.product_image);
                 image_name=mView.findViewById(R.id.image_name);
                 item=mView.findViewById(R.id.item_layout);
                 option_menu=mView.findViewById(R.id.option_btn);

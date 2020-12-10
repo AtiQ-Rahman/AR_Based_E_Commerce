@@ -27,6 +27,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                     </ImageView>
+                    <VideoView
+                        android:visibility="gone"
+                        android:id="@+id/video_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </VideoView>
                 </RelativeLayout>
                 <View
                     android:layout_width="match_parent"
@@ -182,6 +188,9 @@
                             android:text="00"
                             android:layout_height="40dp">
                         </TextView>
+
+
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -199,7 +208,7 @@
                             android:layout_height="40dp">
                         </TextView>
                         <TextView
-                            android:id="@+id/type"
+                            android:id="@+id/type_admin"
                             android:background="@drawable/table_border4"
                             android:layout_width="0dp"
                             android:layout_weight="1"
@@ -208,10 +217,62 @@
                             android:text="00"
                             android:layout_height="40dp">
                         </TextView>
+
+
+
                     </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bottom_view"
+                android:backgroundTint="@color/white"
+                android:background="@drawable/back_rect_with_border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/recycle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@drawable/shadow"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:id="@+id/edit"
+                        android:text="@string/edit"
+                        android:textSize="@dimen/sp_20"
+                        android:layout_margin="10dp"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:onClick="edit"
+                        android:background="@drawable/round_back_transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </Button>
+                    <Button
+                        android:id="@+id/delete"
+                        android:text="@string/delete"
+                        android:textSize="@dimen/sp_20"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:onClick="delete"
+                        android:background="@drawable/round_back_transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
