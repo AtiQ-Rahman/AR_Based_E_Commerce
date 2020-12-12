@@ -36,7 +36,6 @@
         android:layout_height="120dp">
         <com.goodiebag.pinview.Pinview
             android:id="@+id/pinview"
-            app:pinBackground="@drawable/pin_back"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             app:pinWidth="35dp"

@@ -62,10 +62,13 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -239,6 +242,23 @@ public class Add_New_Product extends AppCompatActivity {
         });
 
         }
+        Bitmap getBitmap(String path)
+        {
+            Bitmap bitmap=null;
+            try {
+                Uri uri= Uri.fromFile(new File(path));
+                Log.d("Atiq","Uri:"+uri);
+                InputStream is = getContentResolver().openInputStream(uri);
+                bitmap= BitmapFactory.decodeStream(is);
+                return bitmap;
+            }
+            catch (FileNotFoundException e){
+                System.out.println();
+                Log.d("Atiq",e.toString());
+                return bitmap;
+            }
+
+        }
 
         @Override
         public void onBackPressed() {
@@ -275,17 +295,17 @@ public class Add_New_Product extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
             if (resultCode == RESULT_OK) {
                 if(requestCode == PICK_IMAGE_MULTIPLE){
+
                     imagesPathList.clear();
                     String[] imagesPath = data.getStringExtra("data").split("\\|");
+
 
                     try{
                         //lnrImages.removeAllViews();
                     }catch (Throwable e){
                         e.printStackTrace();
                     }
-                    for (int i=0;i<imagesPath.length;i++){
-                        imagesPathList.add(imagesPath[i]);
-                    }
+                    imagesPathList.addAll(Arrays.asList(imagesPath));
                     recycleAdapter.notifyDataSetChanged();
                 }
                 if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
@@ -379,7 +399,8 @@ public class Add_New_Product extends AppCompatActivity {
                 if(image_path.length()>0){
                     holder.item.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_scale));
                     holder.product_image.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_transition_animation));
-                    holder.product_image.setImageBitmap(BitmapFactory.decodeFile(image_path));
+                    holder.product_image.setImageBitmap(Add_New_Product.this.getBitmap(image_path));
+                    Log.d("Atiq","bitmap:"+Add_New_Product.this.getBitmap(image_path));
                     holder.image_name.setVisibility(View.GONE);
                 }else{
                     holder.image_name.setVisibility(View.VISIBLE);

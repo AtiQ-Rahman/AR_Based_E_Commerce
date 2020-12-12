@@ -246,33 +246,20 @@ public class AllProducts extends Fragment {
         if(drawer.isDrawerOpen(GravityCompat.END)){
             drawer.closeDrawer(GravityCompat.END);
         }
-
-
         for(int i=0;i<products_temp.size();i++){
             Product product=products_temp.get(i);
             //type filter
             System.out.println(product.product_type);
             //price filter
-            if(((product.price>=price_start&&product.price<=price_end))&&!productList.contains(product)){
-                productList.add(product);
+            if(((product.price>=price_start&&product.price<=price_end))||(price_start==0)){
+                if(color.equalsIgnoreCase(product.color)||color.length()==0){
+                    if((product_type.length()==0||product_type.equalsIgnoreCase(product.product_type))&&!productList.contains(product)){
+                        productList.add(product);
+                    }
+                }
+
             }
-            else if((product.price<price_start||product.price>price_end)){
-                productList.remove(product);
-            }
-            //color filter
-            if(color.equalsIgnoreCase(product.color)&&!productList.contains(product))
-            {
-                productList.add(product);
-            }
-            else if(color.length()>0&&!color.equalsIgnoreCase(product.color)){
-                productList.remove(product);
-            }
-            if(product_type.length()==0||product_type.equalsIgnoreCase(product.product_type)){
-                productList.add(product);
-            }
-            else if(!product_type.equalsIgnoreCase(product.product_type)){
-                productList.remove(product);
-            }
+//
         }
         ArrayList<Product> products2=new ArrayList<>();
         for(Product product:productList){
