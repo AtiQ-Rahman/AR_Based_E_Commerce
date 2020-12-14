@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.augmented_reality.AR_Based_E_Commerce"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -29,6 +29,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 
 dependencies {
 
@@ -59,4 +65,11 @@ dependencies {
     implementation 'com.github.lguipeng:BubbleView:1.0.1'
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.github.ssl-zahid:SSLCommerz-Android-Library-:v1.0.2'
+
+
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation (name: 'sslCommerzSdk', ext:'aar')
+
+
 }

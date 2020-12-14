@@ -1,6 +1,7 @@
 package com.augmented_reality.AR_Based_E_Commerce.Customer;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -48,6 +49,7 @@ public class Product_Details_Customer extends AppCompatActivity {
     Product product;
     ImageView imageView;
     TextView tv_price,tv_name,tv_color,id_tv,tv_type;
+    int PriceForPayment;
     EditText price_et;
     User user;
     int price=0,previous_price=0;
@@ -108,7 +110,7 @@ public class Product_Details_Customer extends AppCompatActivity {
                     String user_id=map.get("user_id").toString();
                     String name=map.get("name").toString();
                     int price=Integer.parseInt(map.get("price").toString());
-
+                    PriceForPayment=price;
                     String color=map.get("color").toString();
 
 
@@ -166,6 +168,16 @@ public class Product_Details_Customer extends AppCompatActivity {
         });
 
     }
+
+    public void makePayment(View view){
+
+        Intent intent=new Intent(getApplicationContext(), Payment.class);
+        intent.putExtra("product_id",product_id);
+        intent.putExtra("price",PriceForPayment);
+        startActivity(intent);
+
+    }
+
     public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewAdapter>{
 
         ArrayList<String> products;
@@ -226,5 +238,7 @@ public class Product_Details_Customer extends AppCompatActivity {
         public int getItemCount() {
             return products.size();
         }
+
+
     }
 }
