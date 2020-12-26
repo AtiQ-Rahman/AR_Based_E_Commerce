@@ -654,6 +654,7 @@ public class Add_New_Product extends AppCompatActivity {
 
         user.put("sold_status", "unsold");
         user.put("create_at", FieldValue.serverTimestamp());
+
         documentReference.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,7 +43,7 @@ public class Product_Details_Customer extends AppCompatActivity {
    // ArrayList<PriceHistoryItem> priceHistoryItems=new ArrayList<>();
     RecycleAdapter recycleAdapter;
     RecyclerView recyclerView;
-    public String product_id="",user_id="";
+    public String product_id="",user_id="",product_name="",compress_image_path="",color="",type="";
     FirebaseFirestore db;
     FirebaseAuth firebaseAuth;
     ProgressDialog progressDialog;
@@ -98,6 +99,7 @@ public class Product_Details_Customer extends AppCompatActivity {
     }
     public void get_product_data(){
         progressDialog.show();
+        Toast.makeText(getApplicationContext(),product_id,Toast.LENGTH_LONG).show();
         DocumentReference documentReference=db.collection("AllProducts").document(product_id);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -108,28 +110,29 @@ public class Product_Details_Customer extends AppCompatActivity {
                     Map<String,Object> map=documentSnapshot.getData();
                     String product_id=map.get("product_id").toString();
                     String user_id=map.get("user_id").toString();
-                    String name=map.get("name").toString();
+                    product_name=map.get("name").toString();
                     int price=Integer.parseInt(map.get("price").toString());
                     PriceForPayment=price;
-                    String color=map.get("color").toString();
+                    color=map.get("color").toString();
 
 
 
-                    String compress_image_path=""; map.get("compress_image_path").toString();
+
+                    compress_image_path = map.get("compress_image_path").toString();
                     String[] image_paths=map.get("original_image_path").toString().split(",");
                     String image_path=image_paths[0];
                     System.out.println("image path:"+image_path+" length:"+image_paths.length);
                     String video_path=map.get("video_path").toString();
 
                     String product_alt_id=map.get("alternative_id").toString();
-                    String product_type=product_type=map.get("type").toString();
-                    product=new Product(product_id,product_type,product_alt_id,user_id,name,price,color,image_path,video_path);
+                    type=map.get("type").toString();
+                    product=new Product(product_id,type,product_alt_id,user_id,product_name,price,color,image_path,video_path);
                     imagesPathList.addAll(Arrays.asList(image_paths));
                     recycleAdapter.notifyDataSetChanged();
-                    tv_name.setText(name);
+                    tv_name.setText(product_name);
                     id_tv.setText("A-"+product_alt_id);
                     tv_price.setText(price+" "+getString(R.string.taka));
-                    tv_type.setText(product_type);
+                    tv_type.setText(type);
                     tv_color.setText(color);
                     get_user_data(user_id);
                 }
@@ -174,6 +177,11 @@ public class Product_Details_Customer extends AppCompatActivity {
         Intent intent=new Intent(getApplicationContext(), Payment.class);
         intent.putExtra("product_id",product_id);
         intent.putExtra("price",PriceForPayment);
+        intent.putExtra("compress_image_path",compress_image_path);
+        intent.putExtra("product_name",product_name);
+        intent.putExtra("product_color",color);
+        intent.putExtra("product_type",type);
+
         startActivity(intent);
 
     }
