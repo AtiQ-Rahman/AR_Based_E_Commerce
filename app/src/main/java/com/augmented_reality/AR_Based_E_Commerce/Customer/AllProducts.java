@@ -86,6 +86,7 @@ public class AllProducts extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_all_products, container, false);
+
         firebaseAuth = FirebaseAuth.getInstance();
         user_id = firebaseAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();

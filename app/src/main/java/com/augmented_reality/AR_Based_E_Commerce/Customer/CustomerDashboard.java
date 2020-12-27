@@ -319,7 +319,7 @@ public class CustomerDashboard extends AppCompatActivity implements NavigationVi
                 //search_btn.setVisibility(View.GONE);
                 title_tv.setText("All Orders");
                 active_indicator(3);
-                //changeFragmentView(new AllOrders());
+                changeFragmentView(new AllOrdersForCustomer());
 
             }
         });

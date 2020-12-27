@@ -16,7 +16,7 @@
         android:roundIcon="@drawable/logo_android"
         android:supportsRtl="true"
         android:theme="@style/Theme.AR_Based_E_Commerce">
-        <activity android:name=".Customer.Payment"></activity>
+        <activity android:name=".Customer.Payment" />
         <activity android:name=".Admin.EditProductInfo" />
         <activity android:name=".Admin.Product_Details_Admin" />
         <activity android:name=".CustomPhotoGalleryActivity" />
