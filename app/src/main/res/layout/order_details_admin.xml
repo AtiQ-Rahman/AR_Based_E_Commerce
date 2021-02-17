@@ -30,7 +30,23 @@
             android:padding="6dp"
             android:text="Product Name"
             android:textColor="@color/black"></TextView>
-
+        <ImageButton
+            android:id="@+id/edit_btn"
+            android:background="@drawable/edit_icon"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="20dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp">
+        </ImageButton>
+        <ImageButton
+            android:id="@+id/dlt_btn"
+            android:background="@drawable/dlt_icon"
+            android:layout_margin="20dp"
+            android:layout_width="20dp"
+            android:layout_alignRight="@+id/edit_btn"
+            android:layout_height="20dp">
+        </ImageButton>
     </RelativeLayout>
 
     <TextView

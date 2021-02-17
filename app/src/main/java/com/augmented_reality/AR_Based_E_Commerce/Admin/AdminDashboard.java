@@ -296,6 +296,24 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
 
             }
         });
+
+        //---------Transaction History-----------//
+
+
+        RelativeLayout orders = findViewById(R.id.transaction_history);
+        orders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                search_btn.setVisibility(View.VISIBLE);
+                //search_btn.setVisibility(View.GONE);
+                title_tv.setText("All Orders");
+                active_indicator(3);
+                changeFragmentView(new AllOrdersForAdmin());
+
+            }
+        });
+
         title_tv.setText("All Products");
         active_indicator(2);
         changeFragmentView(new AllProductsForAdmin());

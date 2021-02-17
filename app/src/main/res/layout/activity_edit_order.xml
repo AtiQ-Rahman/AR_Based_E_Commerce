@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Admin.EditOrder">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:layout_height="400dp">
+        <EditText
+            android:id="@+id/productName"
+            android:background="@drawable/edit_back"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:textColorHint="@color/black"
+            android:hint="Product Name"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+        </EditText>
+        <EditText
+            android:id="@+id/productPrice"
+            android:background="@drawable/edit_back"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:textColorHint="@color/black"
+            android:hint="Product Price"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+        </EditText>
+        <EditText
+            android:id="@+id/productColor"
+            android:background="@drawable/edit_back"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:textColorHint="@color/black"
+            android:hint="Product Color"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+        </EditText>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="0dp">
+
+        <Button
+            android:id="@+id/update"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Update"
+            android:layout_marginLeft="120dp"
+            android:layout_marginRight="120dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            android:onClick="update_order"
+            android:layout_gravity="center_horizontal|bottom"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>
