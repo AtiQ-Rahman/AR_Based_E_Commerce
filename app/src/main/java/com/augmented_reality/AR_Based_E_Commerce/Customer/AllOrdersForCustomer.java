@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,7 +17,6 @@ import com.augmented_reality.AR_Based_E_Commerce.Order;
 import com.augmented_reality.AR_Based_E_Commerce.R;
 import com.augmented_reality.AR_Based_E_Commerce.SharedPrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -121,8 +119,8 @@ public class AllOrdersForCustomer extends Fragment {
                 product_name_tv=itemView.findViewById(R.id.product_name_odr);
                 product_price_tv=itemView.findViewById(R.id.product_price);
                 order_date_tv=itemView.findViewById(R.id.order_date);
-                dlt_btn= itemView.findViewById(R.id.dlt_btn);
-                edit_btn = itemView.findViewById(R.id.edit_btn);
+//                dlt_btn= itemView.findViewById(R.id.dlt_btn);
+//                edit_btn = itemView.findViewById(R.id.edit_btn);
             }
         }
 
@@ -141,47 +139,47 @@ public class AllOrdersForCustomer extends Fragment {
             holder.product_name_tv.setText("Product Name: " + order.product_name);
             holder.product_price_tv.setText("Product Price: " + order.product_price);
             holder.order_date_tv.setText("Order Date: " + order.order_date);
-            holder.edit_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context,"Edited!!",Toast.LENGTH_LONG).show();
-//                    Intent tnt=new Intent(getApplicationContext(),EditUser.class);
-//                    tnt.putExtra("user_id",user.id);
-//                    startActivity(tnt);
-                }
-            });
-            holder.dlt_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context,"Deleted!!",Toast.LENGTH_LONG).show();
-//                    delete_user(user.id);
-//                    users.remove(position);
-
-
-                }
-            });
+//            holder.edit_btn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(context,"Edited!!",Toast.LENGTH_LONG).show();
+////                    Intent tnt=new Intent(getApplicationContext(),EditUser.class);
+////                    tnt.putExtra("user_id",user.id);
+////                    startActivity(tnt);
+//                }
+//            });
+//            holder.dlt_btn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(context,"Deleted!!",Toast.LENGTH_LONG).show();
+////                    delete_user(user.id);
+////                    users.remove(position);
+//
+//
+//                }
+//            });
         }
 
 
 
-        public void delete_user(String order_id)
-        {
-
-            FirebaseFirestore db=FirebaseFirestore.getInstance();
-            db.collection("Orders").document(order_id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    Toast.makeText(context,"Deleted!!",Toast.LENGTH_LONG).show();
-                    recycleAdapter.notifyDataSetChanged();
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(context,"Erorr",Toast.LENGTH_LONG).show();
-                }
-            });
-        }
+//        public void delete_user(String order_id)
+//        {
+//
+//            FirebaseFirestore db=FirebaseFirestore.getInstance();
+//            db.collection("Orders").document(order_id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                @Override
+//                public void onComplete(@NonNull Task<Void> task) {
+//                    Toast.makeText(context,"Deleted!!",Toast.LENGTH_LONG).show();
+//                    recycleAdapter.notifyDataSetChanged();
+//
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Toast.makeText(context,"Erorr",Toast.LENGTH_LONG).show();
+//                }
+//            });
+//        }
 
 
         @Override
