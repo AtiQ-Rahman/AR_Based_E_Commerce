@@ -55,7 +55,7 @@ public class AllOrdersForAdmin extends Fragment {
         recycleAdapter=new RecycleAdapter(orders,getContext());
         recyclerView.setAdapter(recycleAdapter);
         progressDialog=new ProgressDialog(getContext());
-        progressDialog.setMessage("Please Wait...");
+        progressDialog.setMessage("Loading..");
         get_all_data();
         return view;
     }

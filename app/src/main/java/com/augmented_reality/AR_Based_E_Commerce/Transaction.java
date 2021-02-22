@@ -11,12 +11,12 @@ public class Transaction implements Comparator<Notification> {
     public String phone_number;
     public int amount;
     public String transaction_id;
-    public String animal_id;
+    public String product_id;
     public String payment_method;
     public Timestamp time;
     public String time2;
 
-    public Transaction(String image_path, String user_name, String user_id, String phone_number, int amount,String transaction_id,String animal_id, String payment_method, Timestamp time) {
+    public Transaction(String image_path, String user_name, String user_id, String phone_number, int amount,String transaction_id,String product_id, String payment_method, Timestamp time) {
 
         this.image_path = image_path;
         this.user_name = user_name;
@@ -24,7 +24,7 @@ public class Transaction implements Comparator<Notification> {
         this.phone_number = phone_number;
         this.amount = amount;
         this.transaction_id=transaction_id;
-        this.animal_id=animal_id;
+        this.product_id=product_id;
         this.payment_method = payment_method;
         this.time = time;
     }
@@ -105,14 +105,14 @@ public class Transaction implements Comparator<Notification> {
                 ", time='" + time + '\'' +
                 '}';
     }
-    public Transaction(String image_path, String user_name, String user_id, String phone_number, int amount,String transaction_id,String animal_id, String payment_method, String time2) {
+    public Transaction(String image_path, String user_name, String user_id, String phone_number, int amount,String transaction_id,String product_id, String payment_method, String time2) {
         this.image_path = image_path;
         this.user_name = user_name;
         this.user_id = user_id;
         this.phone_number = phone_number;
         this.amount = amount;
         this.transaction_id=transaction_id;
-        this.animal_id=animal_id;
+        this.product_id=product_id;
         this.payment_method = payment_method;
         this.time2 = time2;
     }
