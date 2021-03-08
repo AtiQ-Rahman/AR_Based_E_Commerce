@@ -247,14 +247,14 @@ public class Add_New_Product extends AppCompatActivity {
             Bitmap bitmap=null;
             try {
                 Uri uri= Uri.fromFile(new File(path));
-                Log.d("Atiq","Uri:"+uri);
+                //Log.d("Atiq","Uri:"+uri);
                 InputStream is = getContentResolver().openInputStream(uri);
                 bitmap= BitmapFactory.decodeStream(is);
                 return bitmap;
             }
             catch (FileNotFoundException e){
                 System.out.println();
-                Log.d("Atiq",e.toString());
+                //Log.d("Atiq",e.toString());
                 return bitmap;
             }
 
@@ -400,7 +400,7 @@ public class Add_New_Product extends AppCompatActivity {
                     holder.item.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_scale));
                     holder.product_image.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_transition_animation));
                     holder.product_image.setImageBitmap(Add_New_Product.this.getBitmap(image_path));
-                    Log.d("Atiq","bitmap:"+Add_New_Product.this.getBitmap(image_path));
+                    //Log.d("Atiq","bitmap:"+Add_New_Product.this.getBitmap(image_path));
                     holder.image_name.setVisibility(View.GONE);
                 }else{
                     holder.image_name.setVisibility(View.VISIBLE);
@@ -636,7 +636,7 @@ public class Add_New_Product extends AppCompatActivity {
 
     public void upload_product_info(String user_id){
         progressDialog.show();
-        Log.d(TAG,"Total Image:"+imagesPathList.size());
+        //Log.d(TAG,"Total Image:"+imagesPathList.size());
         Map<String, Object> user = new HashMap<>();
         user.put("user_id", user_id);
         user.put("product_id",product_id);
@@ -698,16 +698,16 @@ public class Add_New_Product extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
-                System.out.println("compress image uploaded");
+                //System.out.println("compress image uploaded");
                 ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
-                        Log.d(TAG,"Compress image uploaded:");
+                       // Log.d(TAG,"Compress image uploaded:");
                         Uri uri=task.getResult();
                         update(key,uri.toString());
                         completed[1]=true;
                         if(completed[0]&&completed[2]){
-                            Log.d(TAG,"finish:1-"+completed[1]);
+                            //Log.d(TAG,"finish:1-"+completed[1]);
                             finish();
                         }
 
@@ -729,7 +729,7 @@ public class Add_New_Product extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isComplete()){
-                    System.out.println("image count:"+count+" image path:"+image_path);
+                    //System.out.println("image count:"+count+" image path:"+image_path);
                     DocumentSnapshot documentSnapshot=task.getResult();
                     if(documentSnapshot.exists()){
                         Map<String,Object> map=documentSnapshot.getData();
@@ -739,7 +739,7 @@ public class Add_New_Product extends AppCompatActivity {
                     else{
                         update("original_image_path",image_path);
                     }
-                    Log.d(TAG,"orginal image uploaded:"+image_path);
+                    //Log.d(TAG,"orginal image uploaded:"+image_path);
 
                 }
                 else{
@@ -793,9 +793,9 @@ public class Add_New_Product extends AppCompatActivity {
                         progressBar_layout.setVisibility(View.GONE);
                         Uri uri=task.getResult();
                         update(key,uri.toString());
-                        Log.d(TAG,"Video uploaded:");
+                        //Log.d(TAG,"Video uploaded:");
                         if(completed[0]&&completed[1]){
-                            Log.d(TAG,"finish:2-"+completed[2]);
+                            //Log.d(TAG,"finish:2-"+completed[2]);
                             imagesPathList.add("");
                             imagesPathList.add("");
                             imagesPathList.add("");
@@ -842,7 +842,7 @@ public class Add_New_Product extends AppCompatActivity {
                 count++;
                 if(count>=total_upload_count){
                     progressDialog.dismiss();
-                    Log.d(TAG,"finish:0-"+completed[0]);
+                   // Log.d(TAG,"finish:0-"+completed[0]);
                     finish();
 
                 }

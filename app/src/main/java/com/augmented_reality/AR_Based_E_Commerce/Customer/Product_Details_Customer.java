@@ -121,7 +121,7 @@ public class Product_Details_Customer extends AppCompatActivity {
                     compress_image_path = map.get("compress_image_path").toString();
                     String[] image_paths=map.get("original_image_path").toString().split(",");
                     String image_path=image_paths[0];
-                    System.out.println("image path:"+image_path+" length:"+image_paths.length);
+                    //System.out.println("image path:"+image_path+" length:"+image_paths.length);
                     String video_path=map.get("video_path").toString();
 
                     String product_alt_id=map.get("alternative_id").toString();

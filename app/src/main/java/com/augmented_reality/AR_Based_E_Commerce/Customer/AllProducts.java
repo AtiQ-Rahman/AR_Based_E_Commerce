@@ -34,6 +34,7 @@ import com.augmented_reality.AR_Based_E_Commerce.CustomAlertDialog;
 import com.augmented_reality.AR_Based_E_Commerce.EngToBanConverter;
 import com.augmented_reality.AR_Based_E_Commerce.Product;
 import com.augmented_reality.AR_Based_E_Commerce.R;
+import com.augmented_reality.AR_Based_E_Commerce.googleMlKit.ChooserActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -250,7 +251,7 @@ public class AllProducts extends Fragment {
         for(int i=0;i<products_temp.size();i++){
             Product product=products_temp.get(i);
             //type filter
-            System.out.println(product.product_type);
+            //System.out.println(product.product_type);
             //price filter
             if(((product.price>=price_start&&product.price<=price_end))||(price_start==0)){
                 if(color.equalsIgnoreCase(product.color)||color.length()==0){
@@ -662,6 +663,23 @@ public class AllProducts extends Fragment {
                 public void onClick(View v) {
                     Intent tnt=new Intent(getContext(), Product_Details_Customer.class);
                     tnt.putExtra("product_id",products2.get(1).product_id);
+                    startActivity(tnt);
+                }
+            });
+
+
+            holder.trial1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent tnt=new Intent(getContext(), ChooserActivity.class);
+                    startActivity(tnt);
+                }
+            });
+
+            holder.trail2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent tnt=new Intent(getContext(), ChooserActivity.class);
                     startActivity(tnt);
                 }
             });
