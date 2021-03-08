@@ -246,7 +246,7 @@ public void onComplete(@NonNull Task<DocumentSnapshot> task) {
         String compress_image_path=""; map.get("compress_image_path").toString();
         String[] image_paths=map.get("original_image_path").toString().split(",");
         String image_path=image_paths[0];
-        System.out.println("image path:"+image_path+" length:"+image_paths.length);
+       // System.out.println("image path:"+image_path+" length:"+image_paths.length);
         String video_path=map.get("video_path").toString();
 
         String product_alt_id=map.get("alternative_id").toString();
@@ -736,7 +736,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewAdap
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
-                System.out.println("compress image uploaded");
+                //System.out.println("compress image uploaded");
                 ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {

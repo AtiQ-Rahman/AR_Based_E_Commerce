@@ -77,7 +77,7 @@ public class SharedPrefManager {
         if(map.containsKey("disabled"))
             user.setDisabled((Boolean) map.get("disabled"));
         else user.setDisabled(false);
-        Log.d("=============", String.valueOf(user.isDisabled()));
+        //Log.d("=============", String.valueOf(user.isDisabled()));
         String location="";
         if(map.containsKey("location")){
             location=map.get("location").toString();

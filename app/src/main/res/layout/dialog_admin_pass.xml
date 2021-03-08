@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="@string/enter_your_admin_panel_password"
+                android:text="Enter Your Password"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textColorHint="?android:attr/detailsElementBackground"

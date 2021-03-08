@@ -59,7 +59,7 @@ public class CustomPhotoGalleryActivity extends Activity {
                     show_error_dialog(R.string.input_error,getString(R.string.minimum_image));
                 } else {
 
-                    Log.d("SelectedImages", selectImages);
+                    //Log.d("SelectedImages", selectImages);
                     Intent i = new Intent();
                     i.putExtra("data", selectImages);
                     setResult(Activity.RESULT_OK, i);

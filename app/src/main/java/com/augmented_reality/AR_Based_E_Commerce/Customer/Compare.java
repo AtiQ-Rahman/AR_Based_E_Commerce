@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.augmented_reality.AR_Based_E_Commerce.EngToBanConverter;
 import com.augmented_reality.AR_Based_E_Commerce.Product;
 import com.augmented_reality.AR_Based_E_Commerce.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -95,7 +94,7 @@ public class Compare extends AppCompatActivity {
                     String compress_image_path=map.get("compress_image_path").toString();
                     String[] image_paths=map.get("original_image_path").toString().split(",");
                     String image_path=image_paths[0];
-                    System.out.println("image path:"+image_path+" length:"+image_paths.length);
+                    //System.out.println("image path:"+image_path+" length:"+image_paths.length);
                     String video_path=map.get("video_path").toString();
 
                     String product_alt_id=map.get("alternative_id").toString();
@@ -149,7 +148,7 @@ public class Compare extends AppCompatActivity {
                     String compress_image_path=map.get("compress_image_path").toString();
                     String[] image_paths=map.get("original_image_path").toString().split(",");
                     String image_path=image_paths[0];
-                    System.out.println("image path:"+image_path+" length:"+image_paths.length);
+                  //  System.out.println("image path:"+image_path+" length:"+image_paths.length);
                     String video_path=map.get("video_path").toString();
                     int highest_bid=Integer.parseInt(map.get("highest_bid").toString());
                     int total_bid=Integer.parseInt(map.get("total_bid").toString());
