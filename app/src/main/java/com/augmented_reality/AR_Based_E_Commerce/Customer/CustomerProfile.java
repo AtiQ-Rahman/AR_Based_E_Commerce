@@ -23,7 +23,6 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.augmented_reality.AR_Based_E_Commerce.EngToBanConverter;
 import com.augmented_reality.AR_Based_E_Commerce.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
