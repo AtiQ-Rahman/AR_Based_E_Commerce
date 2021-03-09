@@ -4,11 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,7 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
@@ -33,7 +37,9 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,9 +54,9 @@ public class Messenger extends AppCompatActivity {
     public RecyclerView recyclerView;
     Button send;
     Thread thread;
-    // public RecycleAdapter recycleAdapter;
+    public RecycleAdapter recycleAdapter;
     TextView tv_name;
-    Button back;
+    ImageView back;
     CircleImageView profile_pic;
     String device_id;
     Handler handler;
@@ -58,8 +64,8 @@ public class Messenger extends AppCompatActivity {
     FirebaseFirestore db;
     public Context context;
     public static boolean isMessaging = true;
-    //public ArrayList<Messages> messages=new ArrayList<>();
-    //public String image_path="";
+    public ArrayList<Messages> messages=new ArrayList<>();
+    public String image_path="";
     public String my_id = "";
     ListenerRegistration listenerRegistration;
     ProgressDialog progressDialog;
@@ -72,43 +78,42 @@ public class Messenger extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messenger);
         context = getApplicationContext();
-
-        isMessaging = true;
-        send = findViewById(R.id.send);
-        progressDialog = new ProgressDialog(Messenger.this);
+        isMessaging=true;
+        send=findViewById(R.id.send);
+        progressDialog=new ProgressDialog(Messenger.this);
         progressDialog.setMessage("Please wait....");
-        firebaseAuth = FirebaseAuth.getInstance();
-        if (firebaseAuth.getCurrentUser() != null) my_id = firebaseAuth.getCurrentUser().getUid();
-        db = FirebaseFirestore.getInstance();
-        //messages=new ArrayList<>();
-        recyclerView = findViewById(R.id.recycle);
-        et_message = findViewById(R.id.message);
-        tv_name = findViewById(R.id.user_name);
-        //back=findViewById(R.id.back);
-        profile_pic = findViewById(R.id.profile_image);
+        firebaseAuth=FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser()!=null) my_id=firebaseAuth.getCurrentUser().getUid();
+        db=FirebaseFirestore.getInstance();
+        messages=new ArrayList<>();
+        recyclerView=findViewById(R.id.recycle);
+        et_message=findViewById(R.id.message);
+        tv_name=findViewById(R.id.user_name);
+        back=findViewById(R.id.back);
+        profile_pic=findViewById(R.id.profile_image);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
-        //recycleAdapter=new RecycleAdapter(messages);
-        //   recyclerView.setAdapter(recycleAdapter);
+        recycleAdapter=new RecycleAdapter(messages);
+        recyclerView.setAdapter(recycleAdapter);
 
         //getDeviceId();
-        sender_id = getIntent().getStringExtra("sender_id");
-        receiver_id = getIntent().getStringExtra("receiver_id");
-        sender_type = getIntent().getStringExtra("sender_type");
-        notification_id = getIntent().getStringExtra("notification_id");
-        receiver_type = getIntent().getStringExtra("receiver_type");
-        sender_device_id = getIntent().getStringExtra("sender_device_id");
-        receiver_device_id = getIntent().getStringExtra("receiver_device_id");
-        duplicate = getIntent().getBooleanExtra("duplicate", false);
-        sender_name = SharedPrefManager.getInstance(getApplicationContext()).getUser().user_name;
-        sender_image_path = SharedPrefManager.getInstance(getApplicationContext()).getUser().image_path;
+        sender_id=getIntent().getStringExtra("sender_id");
+        receiver_id=getIntent().getStringExtra("receiver_id");
+        sender_type=getIntent().getStringExtra("sender_type");
+        notification_id=getIntent().getStringExtra("notification_id");
+        receiver_type=getIntent().getStringExtra("receiver_type");
+        sender_device_id=getIntent().getStringExtra("sender_device_id");
+        receiver_device_id=getIntent().getStringExtra("receiver_device_id");
+        duplicate=getIntent().getBooleanExtra("duplicate",false);
+        sender_name=SharedPrefManager.getInstance(getApplicationContext()).getUser().user_name;
+        sender_image_path=SharedPrefManager.getInstance(getApplicationContext()).getUser().image_path;
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 finish();
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
 
             }
         });
@@ -118,14 +123,15 @@ public class Messenger extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String message = et_message.getText().toString();
-                if (message.length() > 0) {
+                String message=et_message.getText().toString();
+                if(message.length()>0){
 
                     et_message.setText("");
-                    //sendMessage(message);
-                } else {
+                    sendMessage(message);
+                }
+                else{
 
-                    Toast.makeText(getApplicationContext(), "Please Enter Message", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Please Enter Message",Toast.LENGTH_LONG).show();
                 }
 
 
@@ -139,8 +145,8 @@ public class Messenger extends AppCompatActivity {
                 final int DRAWABLE_RIGHT = 2;
                 final int DRAWABLE_BOTTOM = 3;
 
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (et_message.getRight() - et_message.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (et_message.getRight() - et_message.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
 
                         //Toast.makeText(getApplicationContext(),"Click On Drawable",Toast.LENGTH_LONG).show();
                         return true;
@@ -150,16 +156,15 @@ public class Messenger extends AppCompatActivity {
             }
         });
         get_receiver_data();
-        if (notification_id != null && notification_id.length() > 5) {
+        if(notification_id!=null&&notification_id.length()>5){
             update_notification_status2(notification_id);
         }
 
     }
-
-    public void update_notification_status2(String document_id) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("seen_status", "seen");
-        DocumentReference documentReference1 = db.collection("AllNotifications").document(document_id);
+    public void update_notification_status2(String document_id){
+        Map<String, Object> map =new HashMap<>();
+        map.put("seen_status","seen");
+        DocumentReference documentReference1=db.collection("AllNotifications").document(document_id);
         documentReference1.set(map);
 
     }
@@ -168,8 +173,8 @@ public class Messenger extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        isMessaging = false;
-        if (listenerRegistration != null) {
+        isMessaging=false;
+        if(listenerRegistration!=null){
             listenerRegistration.remove();
         }
     }
@@ -188,56 +193,58 @@ public class Messenger extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        isMessaging = false;
-        if (listenerRegistration != null) {
+        isMessaging=false;
+        if(listenerRegistration!=null){
             listenerRegistration.remove();
         }
     }
 
-    public void set_listener() {
+    public void set_listener(){
 
 
-        listenerRegistration = db.collection("AllMessages").whereIn("sender_id", Arrays.asList(receiver_id, sender_id)).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        listenerRegistration=db.collection("AllMessages").whereIn("sender_id",Arrays.asList(receiver_id,sender_id)).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (queryDocumentSnapshots.size() > 0) {
+                if(queryDocumentSnapshots.size()>0){
 
-                    if (init) {
-                        for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
+                    if(init){
+                        for(DocumentChange documentChange:queryDocumentSnapshots.getDocumentChanges()){
 
-                            if (documentChange.getType() == ADDED) {
+                            if(documentChange.getType()==ADDED){
 
-                                Map<String, Object> data = documentChange.getDocument().getData();
-                                String receiver_id = data.get("receiver_id").toString();
-                                String sender_id = data.get("sender_id").toString();
-                                if ((receiver_id.equalsIgnoreCase(Messenger.this.sender_id) || receiver_id.equalsIgnoreCase(Messenger.this.receiver_id)) && !sender_id.equalsIgnoreCase(SharedPrefManager.getInstance(getApplicationContext()).getUser().user_id)) {
-                                    String message_id = data.get("message_id").toString();
-                                    sender_id = data.get("sender_id").toString();
-                                    String sender_name = Messenger.this.sender_name;
-                                    String sender_image_path = Messenger.this.sender_image_path;
-                                    String sender_type = data.get("sender_type").toString();
-                                    String receiver_name = Messenger.this.receiver_name;
-                                    String receiver_image_path = Messenger.this.receiver_image_path;
-                                    String receiver_type = data.get("receiver_type").toString();
-                                    String message = data.get("message").toString();
-                                    String time = DateTimeConverter.getInstance().get_current_data_time2();
-                                    //messages.add(new Messages(message_id,message,sender_id,sender_name,sender_image_path,sender_type,receiver_id,receiver_name,receiver_image_path,receiver_type,time));
+                                Map<String,Object> data=documentChange.getDocument().getData();
+                                String receiver_id=data.get("receiver_id").toString();
+                                String sender_id=data.get("sender_id").toString();
+                                if((receiver_id.equalsIgnoreCase(Messenger.this.sender_id)||receiver_id.equalsIgnoreCase(Messenger.this.receiver_id))&&!sender_id.equalsIgnoreCase(SharedPrefManager.getInstance(getApplicationContext()).getUser().user_id)){
+                                    String message_id=data.get("message_id").toString();
+                                    sender_id=data.get("sender_id").toString();
+                                    String sender_name=Messenger.this.sender_name;
+                                    String sender_image_path=Messenger.this.sender_image_path;
+                                    String sender_type=data.get("sender_type").toString();
+                                    String receiver_name=Messenger.this.receiver_name;
+                                    String receiver_image_path=Messenger.this.receiver_image_path;
+                                    String receiver_type=data.get("receiver_type").toString();
+                                    String message=data.get("message").toString();
+                                    String time=DateTimeConverter.getInstance().get_current_data_time2();
+                                    messages.add(new Messages(message_id,message,sender_id,sender_name,sender_image_path,sender_type,receiver_id,receiver_name,receiver_image_path,receiver_type,time));
                                 }
                             }
 
                         }
-                        // recycleAdapter.notifyDataSetChanged();
-                        // recyclerView.scrollToPosition(recycleAdapter.getItemCount()-1);
-                    } else {
+                        recycleAdapter.notifyDataSetChanged();
+                        recyclerView.scrollToPosition(recycleAdapter.getItemCount()-1);
+                    }
+                    else{
 
-                        if (!duplicate) init = true;
-                        else duplicate = false;
+                        if(!duplicate) init=true;
+                        else duplicate=false;
 
                     }
-                } else {
+                }
+                else{
 
-                    if (!duplicate) init = true;
-                    else duplicate = false;
+                    if(!duplicate) init=true;
+                    else duplicate=false;
                 }
             }
         });
@@ -246,43 +253,44 @@ public class Messenger extends AppCompatActivity {
 
     private void getAllMessage() {
 
-
-        Query documentReference = db.collection("AllMessages").whereIn("sender_id", Arrays.asList(sender_id, receiver_id));
+        Query documentReference=db.collection("AllMessages").whereIn("sender_id", Arrays.asList(sender_id,receiver_id));
         documentReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                if (task.isComplete()) {
-                    QuerySnapshot querySnapshot = task.getResult();
-                    if (querySnapshot.size() > 0) {
+                if(task.isComplete()){
+                    QuerySnapshot querySnapshot=task.getResult();
+                    if(querySnapshot.size()>0){
 
-                        for (DocumentSnapshot documentSnapshot : querySnapshot) {
+                        for(DocumentSnapshot documentSnapshot:querySnapshot){
 
-                            Map<String, Object> data = documentSnapshot.getData();
-                            String receiver_id = data.get("receiver_id").toString();
-                            if (receiver_id.equalsIgnoreCase(Messenger.this.sender_id) || receiver_id.equalsIgnoreCase(Messenger.this.receiver_id)) {
-                                String message_id = data.get("message_id").toString();
-                                String sender_id = data.get("sender_id").toString();
-                                String sender_name = Messenger.this.sender_name;
-                                String sender_image_path = Messenger.this.sender_image_path;
-                                String sender_type = data.get("sender_type").toString();
-                                String receiver_name = Messenger.this.receiver_name;
-                                String receiver_image_path = Messenger.this.receiver_image_path;
-                                String receiver_type = data.get("receiver_type").toString();
-                                String message = data.get("message").toString();
-                                String time = DateTimeConverter.getInstance().toDateStr2(((Timestamp) data.get("time")).getSeconds() * 1000);
-                                // messages.add(new Messages(message_id,message,sender_id,sender_name,sender_image_path,sender_type,receiver_id,receiver_name,receiver_image_path,receiver_type,time));
+                            Map<String,Object> data=documentSnapshot.getData();
+                            String receiver_id=data.get("receiver_id").toString();
+                            if(receiver_id.equalsIgnoreCase(Messenger.this.sender_id)||receiver_id.equalsIgnoreCase(Messenger.this.receiver_id)){
+                                String message_id=data.get("message_id").toString();
+                                String sender_id=data.get("sender_id").toString();
+                                String sender_name=Messenger.this.sender_name;
+                                String sender_image_path=Messenger.this.sender_image_path;
+                                String sender_type=data.get("sender_type").toString();
+                                String receiver_name=Messenger.this.receiver_name;
+                                String receiver_image_path=Messenger.this.receiver_image_path;
+                                String receiver_type=data.get("receiver_type").toString();
+                                String message=data.get("message").toString();
+                                String time=DateTimeConverter.getInstance().toDateStr2(((Timestamp)data.get("time")).getSeconds()*1000);
+                                messages.add(new Messages(message_id,message,sender_id,sender_name,sender_image_path,sender_type,receiver_id,receiver_name,receiver_image_path,receiver_type,time));
                             }
                         }
-                        //Collections.sort(messages);
-                        //   recycleAdapter.notifyDataSetChanged();
-                        // recyclerView.scrollToPosition(recycleAdapter.getItemCount()-1);
-                    } else {
+                        Collections.sort(messages);
+                        recycleAdapter.notifyDataSetChanged();
+                        recyclerView.scrollToPosition(recycleAdapter.getItemCount()-1);
+                    }
+                    else{
 
                     }
 
                     progressDialog.dismiss();
-                } else {
+                }
+                else{
                     progressDialog.dismiss();
                 }
 
@@ -292,26 +300,26 @@ public class Messenger extends AppCompatActivity {
 
     }
 
-    public void get_receiver_data() {
+    public void get_receiver_data(){
         progressDialog.show();
-        DocumentReference documentReference = db.collection("Users").document(receiver_id);
+        DocumentReference documentReference=db.collection("Users").document(receiver_id);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isComplete()) {
+                if(task.isComplete()){
 
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    if (documentSnapshot.exists()) {
-                        Map<String, Object> data = documentSnapshot.getData();
-                        receiver_name = data.get("user_name").toString();
-                        receiver_image_path = data.get("image_path").toString();
-                        if (data.containsKey("admin")) {
+                    DocumentSnapshot documentSnapshot=task.getResult();
+                    if(documentSnapshot.exists()){
+                        Map<String,Object> data=documentSnapshot.getData();
+                        receiver_name=data.get("user_name").toString();
+                        receiver_image_path=data.get("image_path").toString();
+                        if(data.containsKey("admin")){
                             tv_name.setText(getString(R.string.admin2));
-                            receiver_type = "Admin";
-                        } else {
+                            receiver_type="Admin";
+                        }
+                        else{
                             tv_name.setText(receiver_name);
-                            if (receiver_image_path != null && receiver_image_path.length() > 0)
-                                Picasso.get().load(receiver_image_path).into(profile_pic);
+                            if(receiver_image_path!=null&&receiver_image_path.length()>0) Picasso.get().load(receiver_image_path).into(profile_pic);
                         }
                     }
                     getAllMessage();
@@ -319,14 +327,14 @@ public class Messenger extends AppCompatActivity {
             }
         });
     }
-}
-    /*public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewAdapter>{
 
-        //ArrayList<Messages> messages;
-        //public RecycleAdapter(ArrayList<Messages> memberInfos){
-          //  this.messages=memberInfos;
+    public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewAdapter>{
+
+        ArrayList<Messages> messages;
+        public RecycleAdapter(ArrayList<Messages> memberInfos){
+            this.messages=memberInfos;
         }
-        /*public  class ViewAdapter extends RecyclerView.ViewHolder{
+        public  class ViewAdapter extends RecyclerView.ViewHolder{
 
             View mView;
             ImageView my_react,oponent_react;
@@ -358,10 +366,8 @@ public class Messenger extends AppCompatActivity {
             View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_message_recv,parent,false);
             return new ViewAdapter(view);
         }
-*/
 
-    /*
-    @Override
+        @Override
         public void onBindViewHolder(@NonNull ViewAdapter holder, final int position) {
 
 
@@ -396,8 +402,8 @@ public class Messenger extends AppCompatActivity {
             return messages.size();
         }
 
-*/
-/*
+
+
     }
 
     public void sendMessage(final String message){
@@ -431,15 +437,12 @@ public class Messenger extends AppCompatActivity {
         recycleAdapter.notifyDataSetChanged();
         recyclerView.scrollToPosition(recycleAdapter.getItemCount()-1);
         String sender_tmp="";
-        if(SharedPrefManager.getInstance(getApplicationContext()).getUser().user_type.equalsIgnoreCase("seller")){
-            sender_tmp=getString(R.string.seller2);
-        }
-        else if(SharedPrefManager.getInstance(getApplicationContext()).getUser().user_type.equalsIgnoreCase("buyer")){
-            sender_tmp=getString(R.string.buyer2);
+        if(SharedPrefManager.getInstance(getApplicationContext()).getUser().user_type.equalsIgnoreCase("customer")){
+            sender_tmp="Customer";
         }
         else if(SharedPrefManager.getInstance(getApplicationContext()).getUser().user_type.equalsIgnoreCase("admin")){
-            sender_tmp=getString(R.string.admin2);
+            sender_tmp="Admin";
         }
-        NotificationSender.getInstance().createNotification(sender_tmp+" আপনাকে মেসেজ পাঠিয়েছেন।",message,sender_id,sender_name,sender_image_path,SharedPrefManager.getInstance(getApplicationContext()).getUser().user_type,receiver_id,message_id,sender_device_id,receiver_device_id,"new message");
+       // NotificationSender.getInstance().createNotification(sender_tmp+" আপনাকে মেসেজ পাঠিয়েছেন।",message,sender_id,sender_name,sender_image_path,SharedPrefManager.getInstance(getApplicationContext()).getUser().user_type,receiver_id,message_id,sender_device_id,receiver_device_id,"new message");
     }
-}*/
+}

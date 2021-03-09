@@ -45,7 +45,7 @@
                     </de.hdodenhof.circleimageview.CircleImageView>
                     <TextView
                         android:fontFamily="serif"
-                        android:textColor="#000000"
+                        android:textColor="#E1D1D1"
                         android:textSize="15sp"
                         android:gravity="center_vertical"
                         android:id="@+id/user_name"

@@ -82,7 +82,7 @@ public class PinViewLayout extends AppCompatActivity {
                     InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
-                    Log.d(TAG,verification_code);
+                    //Log.d(TAG,verification_code);
                     PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, verification_code);
                     progressDialog.show();
                     signInWithPhoneAuthCredential(credential);
@@ -106,7 +106,7 @@ public class PinViewLayout extends AppCompatActivity {
 
 
                 Toast.makeText(getApplicationContext(),"Fail To Send Code",Toast.LENGTH_LONG).show();
-                System.out.println("fial to send code:"+e.toString());
+               // System.out.println("fial to send code:"+e.toString());
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
 
                 } else if (e instanceof FirebaseTooManyRequestsException) {
@@ -153,7 +153,7 @@ public class PinViewLayout extends AppCompatActivity {
 
         verification_code=pinview.getValue();
 
-        Log.d(TAG,verification_code);
+       // Log.d(TAG,verification_code);
 
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, verification_code);
 
@@ -182,7 +182,7 @@ public class PinViewLayout extends AppCompatActivity {
                             FirebaseUser user = task.getResult().getUser();
                             if(user!=null){
                                 user_id=user.getUid();
-                                Log.d("PinViewLayout",activity_type);
+                                //Log.d("PinViewLayout",activity_type);
                                 if(activity_type.equalsIgnoreCase("sign_in")) get_user_data(user_id);
                                 else getDeviceId(null);
                             }

@@ -324,6 +324,20 @@ public class CustomerDashboard extends AppCompatActivity implements NavigationVi
             }
         });
 
+//________________________Cotact----------------
+        RelativeLayout contact = findViewById(R.id.contact);
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                search_btn.setVisibility(View.VISIBLE);
+                //search_btn.setVisibility(View.GONE);
+                title_tv.setText("Contact Info");
+                active_indicator(4);
+                changeFragmentView(new ContactForSeller());
+
+            }
+        });
 
 
     }
