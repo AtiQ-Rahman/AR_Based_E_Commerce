@@ -69,6 +69,8 @@ public final class LivePreviewActivity extends AppCompatActivity
   private GraphicOverlay graphicOverlay2;
   private String selectedModel = POSE_DETECTION;
 
+  private boolean flag=true;
+
   private Switch aSwitch;
 
   @Override
@@ -224,6 +226,12 @@ public final class LivePreviewActivity extends AppCompatActivity
       cameraSource.release();
     }
   }
+//editing
+  @Override
+  public void onBackPressed() {
+    flag=false;
+    finish();
+  }
 
   private String[] getRequiredPermissions() {
     try {
@@ -311,7 +319,7 @@ public final class LivePreviewActivity extends AppCompatActivity
     MediaPlayer failed = MediaPlayer.create(this,R.raw.failed);
     MediaPlayer success = MediaPlayer.create(this,R.raw.success);
 
-    while(true)
+    while(flag)
     {
       //System.out.println("IsGastured: " + StaticVar.isGastured);
       playSound(success,failed);

@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.augmented_reality.AR_Based_E_Commerce.Admin.ContactForAdmin;
 import com.augmented_reality.AR_Based_E_Commerce.AllNotifications;
 import com.augmented_reality.AR_Based_E_Commerce.AnimationFactory;
 import com.augmented_reality.AR_Based_E_Commerce.CustomAlertDialog;
@@ -324,7 +325,7 @@ public class CustomerDashboard extends AppCompatActivity implements NavigationVi
             }
         });
 
-//________________________Cotact----------------
+//--------------Contact----------------
         RelativeLayout contact = findViewById(R.id.contact);
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -334,7 +335,7 @@ public class CustomerDashboard extends AppCompatActivity implements NavigationVi
                 //search_btn.setVisibility(View.GONE);
                 title_tv.setText("Contact Info");
                 active_indicator(4);
-                changeFragmentView(new ContactForSeller());
+                changeFragmentView(new ContactForAdmin());
 
             }
         });

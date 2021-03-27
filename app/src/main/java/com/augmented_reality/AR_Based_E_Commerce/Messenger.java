@@ -313,7 +313,8 @@ public class Messenger extends AppCompatActivity {
                         Map<String,Object> data=documentSnapshot.getData();
                         receiver_name=data.get("user_name").toString();
                         receiver_image_path=data.get("image_path").toString();
-                        if(data.containsKey("admin")){
+                        String user_type=data.get("user_type").toString();
+                        if(user_type.equalsIgnoreCase("admin")){
                             tv_name.setText(getString(R.string.admin2));
                             receiver_type="Admin";
                         }
@@ -416,6 +417,8 @@ public class Messenger extends AppCompatActivity {
         message_data.put("sender_id",sender_id);
         message_data.put("sender_type",sender_type);
         message_data.put("receiver_id",receiver_id);
+        message_data.put("receiver_device_id",receiver_device_id);
+        message_data.put("sender_device_id",sender_device_id);
         message_data.put("receiver_type",receiver_type);
         message_data.put("message",message);
         message_data.put("time", FieldValue.serverTimestamp());

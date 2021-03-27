@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.augmented_reality.AR_Based_E_Commerce.EngToBanConverter;
 import com.augmented_reality.AR_Based_E_Commerce.Product;
 import com.augmented_reality.AR_Based_E_Commerce.R;
 import com.google.android.gms.tasks.OnCompleteListener;

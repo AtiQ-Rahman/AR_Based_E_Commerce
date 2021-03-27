@@ -1,4 +1,4 @@
-package com.augmented_reality.AR_Based_E_Commerce.Customer;
+package com.augmented_reality.AR_Based_E_Commerce.Admin;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,19 +31,22 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
 
-public class ContactForSeller extends Fragment {
+
+public class ContactForAdmin extends Fragment {
+
     public String user_id;
     FirebaseFirestore db;
     FirebaseAuth firebaseAuth;
     ProgressDialog progressDialog;
     TextView mail_tv,phone_number_tv;
     Button call_btn,mail_btn,message_btn;
+    EditText referral_code_et;
     String admin_device_id="",mail,phone_number="",admin_id="";
     public final  int PHONE_CALL_PERMISSION=1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_contact_for_seller, container, false);
+        View view=inflater.inflate(R.layout.fragment_contact_for_admin, container, false);
         firebaseAuth=FirebaseAuth.getInstance();
         user_id=firebaseAuth.getCurrentUser().getUid();
         progressDialog=new ProgressDialog(getContext());
@@ -75,7 +79,7 @@ public class ContactForSeller extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent tnt=new Intent(getContext(), Messenger.class);
-                tnt.putExtra("sender_id", user_id);
+                tnt.putExtra("sender_id",user_id);
                 tnt.putExtra("receiver_id",admin_id);
                 tnt.putExtra("sender_type", SharedPrefManager.getInstance(getContext()).getUser().getUser_type());
                 tnt.putExtra("receiver_type","Admin");

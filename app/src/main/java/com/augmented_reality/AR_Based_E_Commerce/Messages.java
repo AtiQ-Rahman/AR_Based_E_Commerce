@@ -14,6 +14,7 @@ public class Messages implements Comparable<Messages> {
     public String receiver_image_path;
     public String receiver_type;
     public String time;
+    public Date Dtime;
 
     public Messages(String id, String message, String sender_id, String sender_name, String sender_image_path, String sender_type, String receiver_id, String receiver_name, String receiver_image_path, String receiver_type, String time) {
         this.id = id;
@@ -28,6 +29,14 @@ public class Messages implements Comparable<Messages> {
         this.receiver_type = receiver_type;
         this.time = time;
     }
+
+    public Messages(String sender_id,String message,String time) {
+
+        this.message = message;
+        this.sender_id = sender_id;
+        this.time = time;
+    }
+
 
     public String getId() {
         return id;

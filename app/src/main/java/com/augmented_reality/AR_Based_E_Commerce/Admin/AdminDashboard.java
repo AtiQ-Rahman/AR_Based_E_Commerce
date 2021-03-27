@@ -314,6 +314,21 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
             }
         });
 
+        //-----------------Contact----------------
+        RelativeLayout contact = findViewById(R.id.contact);
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                search_btn.setVisibility(View.VISIBLE);
+                //search_btn.setVisibility(View.GONE);
+                title_tv.setText("Contact Info");
+                active_indicator(4);
+                changeFragmentView(new MessageList());
+
+            }
+        });
+
         title_tv.setText("All Products");
         active_indicator(2);
         changeFragmentView(new AllProductsForAdmin());
