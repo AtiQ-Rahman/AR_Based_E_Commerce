@@ -319,7 +319,7 @@ public final class LivePreviewActivity extends AppCompatActivity
     MediaPlayer failed = MediaPlayer.create(this,R.raw.failed);
     MediaPlayer success = MediaPlayer.create(this,R.raw.success);
 
-    while(flag)
+    while(true)
     {
       //System.out.println("IsGastured: " + StaticVar.isGastured);
       playSound(success,failed);
@@ -336,12 +336,13 @@ public final class LivePreviewActivity extends AppCompatActivity
   private void captureScreen() {
     View v = getWindow().getDecorView().getRootView();
     v.setDrawingCacheEnabled(true);
+
     Bitmap bmp = Bitmap.createBitmap(v.getDrawingCache());
     v.setDrawingCacheEnabled(false);
     try {
 
       File dir = new File(Environment
-              .getExternalStorageDirectory()  + File.separator+"AR Sec");
+              .getExternalStorageDirectory()  + File.separator+"Trial Room");
 
       if(!dir.exists())
         dir.mkdirs();

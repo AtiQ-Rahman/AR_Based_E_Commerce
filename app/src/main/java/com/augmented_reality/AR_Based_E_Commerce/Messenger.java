@@ -71,7 +71,9 @@ public class Messenger extends AppCompatActivity {
     ProgressDialog progressDialog;
     public boolean init = false;
     public boolean duplicate = false;
-    public String sender_id = "", receiver_id = "", sender_type = "", receiver_type = "", sender_device_id = "", receiver_device_id = "", sender_name = "", receiver_name = "", sender_image_path = "", receiver_image_path = "", notification_id = "";
+    public String sender_id = "", receiver_id = "", sender_type = "", receiver_type = "", sender_device_id = "",
+            receiver_device_id = "", sender_name = "", receiver_name = "", sender_image_path = "", receiver_image_path = ""
+            , notification_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -446,6 +448,6 @@ public class Messenger extends AppCompatActivity {
         else if(SharedPrefManager.getInstance(getApplicationContext()).getUser().user_type.equalsIgnoreCase("admin")){
             sender_tmp="Admin";
         }
-       // NotificationSender.getInstance().createNotification(sender_tmp+" আপনাকে মেসেজ পাঠিয়েছেন।",message,sender_id,sender_name,sender_image_path,SharedPrefManager.getInstance(getApplicationContext()).getUser().user_type,receiver_id,message_id,sender_device_id,receiver_device_id,"new message");
+       NotificationSender.getInstance(getApplicationContext()).createNotification(sender_tmp+" sent you a message",message,sender_id,sender_name,sender_image_path,SharedPrefManager.getInstance(getApplicationContext()).getUser().user_type,receiver_id,message_id,sender_device_id,receiver_device_id,"new message");
     }
 }

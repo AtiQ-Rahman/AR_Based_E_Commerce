@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -281,7 +282,7 @@ public class AllNotifications extends AppCompatActivity {
                // location=mView.findViewById(R.id.location);
                 item=mView.findViewById(R.id.item);
                 time=mView.findViewById(R.id.time);
-                //admin_checker=mView.findViewById(R.id.admin_checker);
+                admin_checker=mView.findViewById(R.id.admin_checker);
             }
 
 
@@ -343,8 +344,8 @@ public class AllNotifications extends AppCompatActivity {
         @NonNull
         @Override
         public ViewAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-           // View view= LayoutInflater.from(getApplicationContext()).inflate(R.layout.notification_item_layout,parent,false);
-            return new ViewAdapter(null);
+            View view= LayoutInflater.from(getApplicationContext()).inflate(R.layout.notification_item_layout,parent,false);
+            return new ViewAdapter(view);
         }
 
         @Override
@@ -356,14 +357,9 @@ public class AllNotifications extends AppCompatActivity {
 
             holder.title.setText(notification.title);
             holder.body.setText(notification.body);
-            holder.location.setText(notification.sender_location);
             String sender_tmp="";
-            if(notification.sender_type.equalsIgnoreCase("seller")){
-                //sender_tmp=getString(R.string.seller2);
-                holder.name.setText(notification.sender_name);
-                holder.admin_checker.setVisibility(View.GONE);
-            }
-            else if(notification.sender_type.equalsIgnoreCase("buyer")){
+
+           if(notification.sender_type.equalsIgnoreCase("customer")){
                 //sender_tmp=getString(R.string.buyer2);
                 holder.name.setText(notification.sender_name);
                 holder.admin_checker.setVisibility(View.GONE);
@@ -379,7 +375,6 @@ public class AllNotifications extends AppCompatActivity {
             holder.user_type.setText(sender_tmp);
             holder.time.setText(notification.time);
             holder.name.setSelected(true);
-            holder.location.setSelected(true);
             holder.time.setSelected(true);
             holder.title.setSelected(true);
         }

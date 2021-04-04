@@ -85,11 +85,11 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
     public static EditText search_et;
     Button back_btn;
     public String user_id="";
+    public boolean isNotificationOn=true;
     public static ImageView search_btn;
     public static TextView message_unseen;
     ImageView notification_btn;
     AlertDialog alertDialog;
-    public boolean isNotificationOn=true;
     ProgressDialog progressDialog;
 
 
@@ -221,7 +221,6 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
                 }
             }
         });
-
         menu2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,7 +229,6 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
 
             }
         });
-
         notification_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -322,7 +320,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
 
                 search_btn.setVisibility(View.VISIBLE);
                 //search_btn.setVisibility(View.GONE);
-                title_tv.setText("Contact Info");
+                title_tv.setText("All Messages");
                 active_indicator(4);
                 changeFragmentView(new MessageList());
 
@@ -346,6 +344,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         }
 
     }
+
 
     public void changeFragmentView(Fragment fragment) {
 
@@ -425,48 +424,8 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         popup.show();
     }
 
-    public void show_setting_panel(){
-        AlertDialog.Builder alert=new AlertDialog.Builder(AdminDashboard.this);
-        View view= LayoutInflater.from(getApplicationContext()).inflate(R.layout.setting_layout,null);
-        alert.setView(view);
-        alertDialog=alert.show();
-        Button submit=view.findViewById(R.id.submit);
-        Button cancel=view.findViewById(R.id.cancel);
-        RadioButton on=view.findViewById(R.id.on);
-        RadioButton off=view.findViewById(R.id.off);
-        if(SharedPrefManager.getInstance(getApplicationContext()).getUser().isNotificationOn){
-            on.setChecked(true);
-        }
-        else{
-            off.setChecked(true);
-        }
-        on.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) isNotificationOn =true;
-            }
-        });
-        off.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) isNotificationOn =false;
-            }
-        });
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                update_login_status( isNotificationOn);
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
-    }
-    public void  update_login_status(boolean isNotificationOn){
+
+    public void update_login_status(boolean isNotificationOn){
         progressDialog.show();
         User user=SharedPrefManager.getInstance(getApplicationContext()).getUser();
         user.setNotificationOn(isNotificationOn);
@@ -509,6 +468,47 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
     protected void onResume() {
         super.onResume();
         get_all_notifications();
+    }
+    public void show_setting_panel(){
+        AlertDialog.Builder alert=new AlertDialog.Builder(AdminDashboard.this);
+        View view= LayoutInflater.from(getApplicationContext()).inflate(R.layout.setting_layout,null);
+        alert.setView(view);
+        alertDialog=alert.show();
+        Button submit=view.findViewById(R.id.submit);
+        Button cancel=view.findViewById(R.id.cancel);
+        RadioButton on=view.findViewById(R.id.on);
+        RadioButton off=view.findViewById(R.id.off);
+        if(SharedPrefManager.getInstance(getApplicationContext()).getUser().isNotificationOn){
+            on.setChecked(true);
+        }
+        else{
+            off.setChecked(true);
+        }
+        on.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) isNotificationOn =true;
+            }
+        });
+        off.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) isNotificationOn =false;
+            }
+        });
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                update_login_status(isNotificationOn);
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
     public void show_exit_dialog(){

@@ -68,7 +68,7 @@ public class SegmentationGraphic extends GraphicOverlay.Graphic {
       canvas.drawBitmap(bitmap, getTransformationMatrix(), null);
     }
     bitmap.recycle();
-    // Reset byteBuffer pointer to beginning, so that the mask can be redrawn if screen is refreshed
+
     mask.rewind();
   }
 

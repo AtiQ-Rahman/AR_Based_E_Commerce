@@ -50,6 +50,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Field;
@@ -353,7 +355,7 @@ public class CustomerDashboard extends AppCompatActivity implements NavigationVi
     @Override
     protected void onResume() {
         super.onResume();
-       // get_all_notifications();
+       get_all_notifications();
     }
 
     public void active_indicator(int index) {
@@ -380,7 +382,37 @@ public class CustomerDashboard extends AppCompatActivity implements NavigationVi
                 .addToBackStack(null).commit();
         drawer.closeDrawer(GravityCompat.START);
     }
+    public void get_all_notifications(){
+        Query documentReference=db.collection("AllNotifications").whereEqualTo("receiver_id",user_id).whereEqualTo("seen_status","unseen");
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isComplete()){
 
+                    QuerySnapshot querySnapshot=task.getResult();
+                    if(querySnapshot!=null&&querySnapshot.size()>0){
+
+                        message_unseen.setVisibility(View.VISIBLE);
+                        if(querySnapshot.size()<100){
+                            message_unseen.setText(querySnapshot.size()+"");
+                        }
+                        else{
+                            message_unseen.setText("99+");
+                        }
+                    }
+                    else{
+                        message_unseen.setVisibility(View.GONE);
+
+                    }
+
+                }
+
+
+            }
+
+
+        });
+    }
     public void showPopup(View view) {
         PopupMenu popup = new PopupMenu(CustomerDashboard.this, view);
         try {

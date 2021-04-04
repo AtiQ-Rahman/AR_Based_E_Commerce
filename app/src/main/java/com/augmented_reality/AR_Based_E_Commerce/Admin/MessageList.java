@@ -75,9 +75,10 @@ public class MessageList extends Fragment {
 
                         Map<String, Object> data = documentSnapshot.getData();
 
-                             time = toDateStr(((Timestamp) data.get("time")).getSeconds() * 1000);
+
                             //data.get("order_time").toString()
                             if(data.get("receiver_id").toString().equalsIgnoreCase("3mRRdRp6ZHOGg70Wfw5KXohMyHw1")) {
+                                time = toDateStr(((Timestamp) data.get("time")).getSeconds() * 1000);
                                 Message message = new Message(data.get("sender_id").toString(), data.get("receiver_id").toString(), data.get("receiver_device_id").toString(), data.get("message").toString(), time);
                                 messages.add(message);
                             }

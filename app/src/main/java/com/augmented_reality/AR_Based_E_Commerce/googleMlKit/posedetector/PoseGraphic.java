@@ -127,7 +127,7 @@ public class PoseGraphic extends GraphicOverlay.Graphic {
                     rightWrist.getInFrameLikelihood()+leftWrist.getInFrameLikelihood()
                     )/8.000f;
 
-    if(avgLiklihood>= 0.997){
+    if(avgLiklihood>= 0.995){
       StaticVar.isPoseDetecd = true;
     }
     else  {
